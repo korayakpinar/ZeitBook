@@ -1196,8 +1196,6 @@ namespace İronideDeneme
                 messagesPanel.Location=new Point(leftpanel.Width+3,messagesPanel.Location.Y);
                 messagesPanel.Size=new Size((Width-messagesPanel.Location.X)-BorderThickness,messagesPanel.Height);
                 openbutton.Left += leftpanel.Width;
-                //postTextBox.Width=messagesPanel.Width-100;
-                //postTextBox.Left=leftpanel.Width+((messagesPanel.Width-postTextBox.Width)/2);
                 behindPostTextBox.Width-=leftpanel.Width;
                 behindPostTextBox.Left+=leftpanel.Width;
                 postTextBox.Width-=leftpanel.Width;
