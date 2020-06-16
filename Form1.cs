@@ -1,0 +1,1214 @@
+﻿using System;
+using System.Drawing;
+using System.Windows.Forms;
+using Ironide;
+using Ironide.Tools;
+using MochaDB;
+using MochaDB.Querying;
+using MochaDB.Mhql;
+using System.Linq;
+using System.Security.Cryptography;
+using Zeit.Properties;
+
+namespace İronideDeneme
+{
+    public partial class Form1 : IronideForm
+    {
+        int i = 10;
+        string tablename = "";
+        MochaDatabase db = new MochaDatabase("path=Zeit;AutoConnect=true");
+        //string bordercolor= "#1a66ff";
+        #region Components
+
+        IronideSlidePanel menuPanel1 = new IronideSlidePanel();
+        IronideSlidePanel actionsPanel = new IronideSlidePanel();
+        IronideFlowLayoutPanel messagesPanel = new IronideFlowLayoutPanel();
+        IronidePanel behindPostTextBox = new IronidePanel();
+        IronideForm creatingForm = new IronideForm();
+        IronideForm removingForm = new IronideForm();
+        IronideForm editingForm = new IronideForm();
+        IronideButton menuButton1 = new IronideButton();
+        IronidePanel logoPanel1 = new IronidePanel();
+        IronideButton settingsButton = new IronideButton();
+        IronideButton actionsButton = new IronideButton();
+        IronideButton creatingButton = new IronideButton();
+        IronideButton removingButton = new IronideButton();
+        IronideButton editingButton = new IronideButton();
+        IronideButton homepageButton = new IronideButton();
+        IronideButton editButton = new IronideButton();
+        IronideButton createButton = new IronideButton();
+        IronideButton addDiary = new IronideButton();
+        IronideFlowLayoutPanel mainPanel = new IronideFlowLayoutPanel();
+        IronideLabel nameLabel = new IronideLabel();
+        IronideLabel descLabel = new IronideLabel();
+        IronideLabel nameLabelEditing = new IronideLabel();
+        IronideLabel descLabelEditing = new IronideLabel();
+        IronideButton removeButton = new IronideButton();
+        IronidePictureBox logopicture = new IronidePictureBox();
+        IronideCheckBox colorChecker = new IronideCheckBox();
+        IronideCheckBox colorCheckerEditing = new IronideCheckBox();
+        IronideColorPicker buttonColor = new IronideColorPicker();
+        IronideColorPicker buttonColorEditing = new IronideColorPicker();
+        TextBox desc = new TextBox();
+        TextBox name = new TextBox();
+        TextBox descEditing = new TextBox();
+        TextBox nameEditing = new TextBox();
+        IronideComboBox buttonsList = new IronideComboBox();
+        IronideComboBox buttonsListEditing = new IronideComboBox();
+        Ironide.Components.IronideContextMenuStrip bigOneRC = new Ironide.Components.IronideContextMenuStrip();
+        IronideTextBox postTextBox = new IronideTextBox();
+        
+        
+
+
+        #endregion
+        public Form1()
+        {
+            InitializeComponent();
+
+
+            #region loadingButtons
+
+            refresh();
+            
+            
+            
+            
+            #endregion
+
+            #region ComponentOptions
+            TitlebarBackColor = IronideColorizer.FromHtml("#1f1f1f");
+            TitlebarForeColor = Color.FromArgb(255, 255, 255);
+            this.BackColor = Color.FromArgb(69, 69, 69);
+            this.BackColor2 = this.BackColor;
+            this.Title = "Zeit";
+            this.ShowIcon = true;
+            this.TitlebarIconWidth=0;
+            leftpanel.BackColor = Color.FromArgb(39, 39, 39);
+            leftpanel.BackColor2 = Color.FromArgb(39,39,39);
+            leftpanel.Visible = false;
+            openbutton.Region = IronideConvert.ToRoundedRegion(openbutton.ClientRectangle,15);
+            openbutton.BackColor = Color.FromArgb(39, 39, 39);
+            openbutton.BackColor2 = Color.FromArgb(39,39,39);
+            openbutton.ForeColor = Color.White;
+            openbutton.SendToBack();
+            openbutton.BorderThickness = 0;
+            this.BorderColor = Color.FromArgb(31, 31, 31);
+            version.ForeColor=Color.DimGray;
+            version.BackColor=Color.Transparent;
+            version.BackColor2=version.BackColor;
+
+            #endregion
+
+            #region AllPanels
+
+            #region mainPanel
+
+            mainPanel.Size = new Size(this.Width, leftpanel.Height);
+            mainPanel.SendToBack();
+            mainPanel.Top = this.Height - mainPanel.Height-3;
+            mainPanel.Anchor = AnchorStyles.Right | AnchorStyles.Left |AnchorStyles.Top|AnchorStyles.Bottom;
+            mainPanel.Width = mainPanel.Width - 10;
+            mainPanel.Left = 3;
+            mainPanel.BackColor = this.BackColor;
+            mainPanel.BackColor2=this.BackColor2;
+            mainPanel.ControlAdded+=MainPanel_ControlAdded;
+
+
+
+            #endregion
+
+            #region menuPanel1
+
+            menuPanel1.Text = "There is no diaries right now :'(";
+            if(menuPanel1.Controls.Count>0) {
+                menuPanel1.TextRender=false;
+            } else {
+                menuPanel1.TextRender=true;
+            }
+            menuPanel1.Font = new Font("Microsoft Sans Serif",13);
+            menuPanel1.ForeColor = IronideColorizer.FromHtml("#797979");
+            menuPanel1.TextAlign = ContentAlignment.MiddleCenter;
+            menuPanel1.Name = "menuPanel1";
+            menuPanel1.Size = new Size(251,40);
+            menuPanel1.BorderThickness = 0;
+            menuPanel1.Dock = DockStyle.Top;
+            menuPanel1.BackColor = IronideColorizer.FromHtml("#484848");
+            menuPanel1.BackColor2 = menuPanel1.BackColor;
+            menuPanel1.ControlAdded += MenuPanel1_ControlAdded;
+            menuPanel1.ControlRemoved+=MenuPanel1_ControlRemoved;
+            var numb = db.GetElements("Tables").Count;
+            if(numb==1) {
+                menuPanel1.Height=40;
+            } else {
+                menuPanel1.Height=(db.GetElements("Tables").Count)*40;
+            }
+            
+
+            menuPanel1.Hide();
+
+            #endregion
+
+            #region actionsPanel
+
+            actionsPanel.Name = "menuPanel1";
+            actionsPanel.Size = new Size(251,160);
+            actionsPanel.BorderThickness = 0;
+            actionsPanel.Dock = DockStyle.Top;
+            actionsPanel.BackColor = IronideColorizer.FromHtml("#404040");
+            actionsPanel.BackColor2 = IronideColorizer.FromHtml("#404040");
+            actionsPanel.Hide();
+
+            #endregion
+
+            #region logoPanel
+
+            logoPanel1.Name = "logoPanel1";
+            logoPanel1.Size =new Size(251, 85);
+            logoPanel1.BorderThickness = 0;
+            logoPanel1.Dock = DockStyle.Top;
+            logoPanel1.BackColor = leftpanel.BackColor;
+            logoPanel1.BackColor2 = leftpanel.BackColor2;
+
+            #endregion
+
+            #endregion
+
+            #region AllButtons
+
+            #region settingsButton
+
+            settingsButton.Name = "setttingsButton";
+            settingsButton.Size = new Size(251, 40);
+            settingsButton.Text = "Settings";
+            settingsButton.Font = new Font("Microsoft Sans Serif", 12, FontStyle.Regular);
+            settingsButton.ForeColor = Color.White;
+            settingsButton.BorderThickness = 0;
+            settingsButton.TextAlign = ContentAlignment.MiddleCenter;
+            settingsButton.BackColor = IronideColorizer.FromHtml("#303030");
+            settingsButton.BackColor2 = settingsButton.BackColor;
+            settingsButton.EnterColor = IronideColorizer.FromHtml("#363636");
+            settingsButton.HoverColor = IronideColorizer.FromHtml("#383838");
+            settingsButton.Dock = DockStyle.Top;
+
+            #endregion
+
+            #region actionsButton
+            
+            actionsButton.Name = "actionsButton";
+            actionsButton.Size = new Size(251, 40);
+            actionsButton.Text = "Actions";
+            actionsButton.Font = new Font("Microsoft Sans Serif", 12, FontStyle.Regular);
+            actionsButton.ForeColor = Color.White;
+            actionsButton.BorderThickness = 0;
+            actionsButton.TextAlign = ContentAlignment.MiddleCenter;
+            actionsButton.BackColor = IronideColorizer.FromHtml("#303030");
+            actionsButton.BackColor2 = actionsButton.BackColor;
+            actionsButton.EnterColor = IronideColorizer.FromHtml("#363636");
+            actionsButton.HoverColor = IronideColorizer.FromHtml("#383838");
+            actionsButton.Dock = DockStyle.Top;
+            actionsButton.Click += ActionsButton_Click;
+
+            #endregion
+
+            #region menuButton1
+
+            menuButton1.Name = "menuButton1";
+            menuButton1.Size = new Size(251,40);
+            menuButton1.Text = "Diaries";
+            menuButton1.Font = new Font("Microsoft Sans Serif",12,FontStyle.Regular);
+            menuButton1.ForeColor = Color.White;
+            menuButton1.BorderThickness = 0;
+            menuButton1.TextAlign = ContentAlignment.MiddleCenter;
+            menuButton1.BackColor = IronideColorizer.FromHtml("#303030");
+            menuButton1.BackColor2 = menuButton1.BackColor;
+            menuButton1.EnterColor = IronideColorizer.FromHtml("#363636");
+            menuButton1.HoverColor = IronideColorizer.FromHtml("#383838");
+            menuButton1.Dock = DockStyle.Top;
+            menuButton1.Top += 50;
+            menuButton1.Click += MenuButton1_Click;
+
+            #endregion
+            
+            #region creatingButton
+
+            creatingButton.Name = "Create a Diary";
+            creatingButton.Size = new Size(251, 40);
+            creatingButton.Text = "  Create a Diary";
+            creatingButton.Font = new Font("Microsoft Sans Serif", 12, FontStyle.Regular);
+            creatingButton.Dock = DockStyle.Top;
+            creatingButton.TextAlign = ContentAlignment.MiddleLeft;
+            creatingButton.BorderThickness = 0;
+            creatingButton.BackColor = IronideColorizer.FromHtml("#484848");
+            creatingButton.BackColor2 = creatingButton.BackColor;
+            creatingButton.EnterColor = IronideColorizer.FromHtml("#363636");
+            creatingButton.HoverColor = IronideColorizer.FromHtml("#4d4d4d");
+            creatingButton.ForeColor = IronideColorizer.FromHtml("#00ff00");
+            creatingButton.Click += AddingButton_Click;
+            
+            #endregion
+
+            #region removingButton
+
+            removingButton.Name = "Remove a Diary";
+            removingButton.Size = new Size(251, 40);
+            removingButton.Text = "  Remove a Diary";
+            removingButton.Font = new Font("Microsoft Sans Serif", 12, FontStyle.Regular);
+            removingButton.Dock = DockStyle.Top;
+            removingButton.TextAlign = ContentAlignment.MiddleLeft;
+            removingButton.BorderThickness = 0;
+            removingButton.BackColor = IronideColorizer.FromHtml("#484848");
+            removingButton.BackColor2 = removingButton.BackColor;
+            removingButton.EnterColor = IronideColorizer.FromHtml("#363636");
+            removingButton.HoverColor = IronideColorizer.FromHtml("#4d4d4d");
+            removingButton.ForeColor = IronideColorizer.FromHtml("#ff0000");
+            removingButton.Click+=RemovingButton_Click;
+
+            #endregion
+
+            #region editingButton
+
+            editingButton.Name = "Edit a Diary";
+            editingButton.Size = new Size(251, 40);
+            editingButton.Text = "  Edit a Diary";
+            editingButton.Font = new Font("Microsoft Sans Serif", 12, FontStyle.Regular);
+            editingButton.Dock = DockStyle.Top;
+            editingButton.TextAlign = ContentAlignment.MiddleLeft;
+            editingButton.BorderThickness = 0;
+            editingButton.BackColor = IronideColorizer.FromHtml("#484848");
+            editingButton.BackColor2 = editingButton.BackColor;
+            editingButton.EnterColor = IronideColorizer.FromHtml("#363636");
+            editingButton.HoverColor = IronideColorizer.FromHtml("#4d4d4d");
+            editingButton.ForeColor = Color.Yellow;
+            editingButton.Click+=EditButton_Click;
+
+            #endregion
+
+            #region homepageButton
+
+            homepageButton.Name = "Go to Homepage";
+            homepageButton.Size = new Size(251, 40);
+            homepageButton.Text = "  Go to Homepage";
+            homepageButton.Font = new Font("Microsoft Sans Serif", 12, FontStyle.Regular);
+            homepageButton.Dock = DockStyle.Top;
+            homepageButton.TextAlign = ContentAlignment.MiddleLeft;
+            homepageButton.BorderThickness = 0;
+            homepageButton.BackColor = IronideColorizer.FromHtml("#484848");
+            homepageButton.BackColor2 = homepageButton.BackColor;
+            homepageButton.EnterColor = IronideColorizer.FromHtml("#363636");
+            homepageButton.HoverColor = IronideColorizer.FromHtml("#4d4d4d");
+            homepageButton.ForeColor = IronideColorizer.FromHtml("#ffffff");
+            homepageButton.Click+=HomepageButton_Click;
+
+            #endregion
+
+            #region createButton
+            
+            createButton.Size = new Size(150, 40);
+            createButton.Location = new Point(575, 550);
+            createButton.BackColor = IronideColorizer.FromHtml("#606060");
+            createButton.BackColor2 = IronideColorizer.FromHtml("#606060");
+            createButton.ForeColor = IronideColorizer.FromHtml("#00ff00");
+            createButton.EnterColor = createButton.BackColor;
+            createButton.HoverColor = IronideColorizer.FromHtml("#757575");
+            createButton.BorderThickness = 0;
+            createButton.Text = "Create";
+            createButton.TextAlign = ContentAlignment.MiddleCenter;
+            createButton.Font = menuButton1.Font;
+            createButton.Click += CreateButton_Click;
+
+            #endregion
+
+            #region editButton
+
+            editButton.Size = new Size(150,40);
+            editButton.Location = new Point(590,620);
+            editButton.BackColor = IronideColorizer.FromHtml("#606060");
+            editButton.BackColor2 = IronideColorizer.FromHtml("#606060");
+            editButton.ForeColor = IronideColorizer.FromHtml("#ffff00");
+            editButton.EnterColor = editButton.BackColor;
+            editButton.HoverColor = IronideColorizer.FromHtml("#757575");
+            editButton.BorderThickness = 0;
+            editButton.Text = "Edit";
+            editButton.TextAlign = ContentAlignment.MiddleCenter;
+            editButton.Font = menuButton1.Font;
+            editButton.Click+=EditButton_Click1;
+
+
+            #endregion
+
+            #region removeButton
+            removeButton.Size = new Size(150,40);
+            removeButton.Location = new Point(400,250);
+            removeButton.BackColor = IronideColorizer.FromHtml("#606060");
+            removeButton.BackColor2 = IronideColorizer.FromHtml("#606060");
+            removeButton.ForeColor = IronideColorizer.FromHtml("#ff0000");
+            removeButton.EnterColor = createButton.BackColor;
+            removeButton.HoverColor = IronideColorizer.FromHtml("#757575");
+            removeButton.BorderThickness = 0;
+            removeButton.Text = "Remove";
+            removeButton.TextAlign = ContentAlignment.MiddleCenter;
+            removeButton.Font = menuButton1.Font;
+            removeButton.Click+=RemoveButton_Click;
+            #endregion
+
+            #endregion
+
+            #region Forms
+
+            #region creatingForm
+
+            creatingForm.Size = new Size(800, 650);
+            creatingForm.BackColor = IronideColorizer.FromHex("3f3f3f");
+            creatingForm.BackColor2 = IronideColorizer.FromHex("3f3f3f");
+            creatingForm.BorderThickness = 1;
+            creatingForm.BorderColor = IronideColorizer.FromHtml("#00ff00");
+            creatingForm.Animation = IronideFormAnimation.Fade;
+            creatingForm.AnimationDelay = 15;
+            creatingForm.ShowIcon = false;
+            creatingForm.TitlebarIconWidth = 0;
+            creatingForm.MaximizeBox = false;
+            creatingForm.MinimizeBox = false;
+            creatingForm.ResizeDoubleClick = false;
+            creatingForm.Title = "";
+            creatingForm.TitlebarForeColor = Color.White;
+            creatingForm.TitlebarBackColor = creatingForm.BackColor;
+            creatingForm.CloseBoxHoverColor = Color.Red;
+            creatingForm.ShowInTaskbar = false;
+
+
+            #endregion
+
+            #region removingForm
+
+            removingForm.Size= new Size(600,350);
+            removingForm.BackColor = IronideColorizer.FromHex("3f3f3f");
+            removingForm.BackColor2 = IronideColorizer.FromHex("3f3f3f");
+            removingForm.BorderThickness = 1;
+            removingForm.BorderColor = IronideColorizer.FromHtml("#ff0000");
+            removingForm.Animation = IronideFormAnimation.Fade;
+            removingForm.AnimationDelay = 15;
+            removingForm.ShowIcon = false;
+            removingForm.TitlebarIconWidth = 0;
+            removingForm.MaximizeBox = false;
+            removingForm.MinimizeBox = false;
+            removingForm.ResizeDoubleClick = false;
+            removingForm.Title = "";
+            removingForm.TitlebarForeColor = Color.White;
+            removingForm.TitlebarBackColor = removingForm.BackColor;
+            removingForm.CloseBoxHoverColor = Color.Red;
+            removingForm.ShowInTaskbar = false;
+
+            #endregion
+
+            #region editingForm
+
+            editingForm.Size= new Size(800,700);
+            editingForm.BackColor = IronideColorizer.FromHex("3f3f3f");
+            editingForm.BackColor2 = IronideColorizer.FromHex("3f3f3f");
+            editingForm.BorderThickness = 1;
+            editingForm.BorderColor = IronideColorizer.FromHtml("#ffff00");
+            editingForm.Animation = IronideFormAnimation.Fade;
+            editingForm.AnimationDelay = 15;
+            editingForm.ShowIcon = false;
+            editingForm.TitlebarIconWidth = 0;
+            editingForm.MaximizeBox = false;
+            editingForm.MinimizeBox = false;
+            editingForm.ResizeDoubleClick = false;
+            editingForm.Title = "";
+            editingForm.TitlebarForeColor = Color.White;
+            editingForm.TitlebarBackColor = editingForm.BackColor;
+            editingForm.CloseBoxHoverColor = Color.Red;
+            editingForm.ShowInTaskbar = false;
+
+            #endregion
+
+            #endregion
+
+            #region logoPicture
+
+            logopicture.Image = Resources._new;
+            logopicture.SizeMode = IronideImageSizeMode.Stretch;
+            logopicture.BorderThickness = 0;
+            logopicture.Size = new Size(125, 125);
+            logopicture.BackColor = logoPanel1.BackColor;
+            logopicture.BackColor2=logoPanel1.BackColor2;
+            
+
+            logopicture.Location = new Point((logoPanel1.Width / 2) - logopicture.Height / 2, (logoPanel1.Height / 2) - logopicture.Width / 2);
+            //logopicture.Location = new Point((mainPanel.Width/2)- logopicture.Height/2, (mainPanel.Height/2)- logopicture.Width/2);
+            logopicture.Anchor = AnchorStyles.None;
+
+            #endregion
+
+            #region nameLabelandTextBox
+
+            name.Name = "NameTextBox";
+            name.Location = new Point(320, 100);
+            name.Size = new Size(300, 90);
+            name.Font = new Font("Microsoft Sans Serif", 10);
+
+            nameLabel.AutoSize = true;
+            nameLabel.Text = "Name of the Diary:";
+            nameLabel.Font = new Font("Microsoft Sans Serif", 13);
+            nameLabel.ForeColor = Color.White;
+            nameLabel.BackColor=creatingForm.BackColor;
+            nameLabel.BackColor2=nameLabel.BackColor;
+            nameLabel.Location = new Point(160, 100);
+
+            #endregion
+
+            #region descLabelandTextBox
+
+            desc.Location = new Point(320, 175);
+            desc.Multiline = true;
+            desc.Size = new Size(300, 150);
+            desc.Font = new Font("Microsoft Sans Serif", 9);
+            desc.ScrollBars = ScrollBars.Vertical;
+
+            descLabel.AutoSize = true;
+            descLabel.Text = "Description of the Diary:";
+            descLabel.Font = new Font("Microsoft Sans Serif", 13);
+            descLabel.ForeColor = Color.White;
+            descLabel.BackColor=creatingForm.BackColor;
+            descLabel.BackColor2=descLabel.BackColor;
+            descLabel.Location = new Point(120, 230);
+
+            #endregion
+
+            #region editingFormControls
+
+            #region nameLabelandTextBoxEditing
+
+            nameEditing.Name = "nameEditingTextBox";
+            nameEditing.Location = new Point(360,130);
+            nameEditing.Size = new Size(300,90);
+            nameEditing.Font = new Font("Microsoft Sans Serif",10);
+
+            nameLabelEditing.AutoSize = true;
+            nameLabelEditing.Text = "New name of the Diary:";
+            nameLabelEditing.Font = new Font("Microsoft Sans Serif",13);
+            nameLabelEditing.ForeColor = Color.White;
+            nameLabelEditing.BackColor=creatingForm.BackColor;
+            nameLabelEditing.BackColor2=nameLabelEditing.BackColor;
+            nameLabelEditing.Location = new Point(160,130);
+
+            #endregion
+
+            #region descLabelandTextBoxEditing
+
+            descEditing.Location = new Point(360,205);
+            descEditing.Multiline = true;
+            descEditing.Size = new Size(300,150);
+            descEditing.Font = new Font("Microsoft Sans Serif",9);
+            descEditing.ScrollBars = ScrollBars.Vertical;
+
+            descLabelEditing.AutoSize = true;
+            descLabelEditing.Text = "New description of the Diary:";
+            descLabelEditing.Font = new Font("Microsoft Sans Serif",13);
+            descLabelEditing.ForeColor = Color.White;
+            descLabelEditing.BackColor=creatingForm.BackColor;
+            descLabelEditing.BackColor2=descLabelEditing.BackColor;
+            descLabelEditing.Location = new Point(120,260);
+
+            #endregion
+
+            #region ColorPickerandCheckBoxEditing
+
+            buttonColorEditing.Size=new Size(200,190);
+            buttonColorEditing.Location=new Point(410,380);
+            buttonColorEditing.Hide();
+
+            colorCheckerEditing.Size=new Size(150,25);
+            colorCheckerEditing.Text="New Color";
+            colorCheckerEditing.BackColor=creatingForm.BackColor;
+            colorCheckerEditing.BackColor2=creatingForm.BackColor2;
+            colorCheckerEditing.ForeColor=Color.White;
+            colorCheckerEditing.Location=new Point(180,460);
+            colorCheckerEditing.Visible=true;
+            colorCheckerEditing.Font=menuButton1.Font;
+            colorCheckerEditing.CheckedChanged+=ColorCheckerEditing_CheckedChanged;
+
+            #endregion
+
+            #region buttonsListEditing
+
+            buttonsListEditing.Font=new Font("Microsoft Sans Serif",10);
+            buttonsListEditing.Width=200;
+            buttonsListEditing.BackColor=Color.White;
+            buttonsListEditing.BackColor=Color.White;
+            buttonsListEditing.BorderColor=editingForm.BackColor;
+            buttonsListEditing.HighlightColor=editingForm.BackColor;
+            buttonsListEditing.Location=new Point(editingForm.Width/2-buttonsListEditing.Width/2,70);
+            buttonsListEditing.PlaceholderAlign=ContentAlignment.MiddleCenter;
+            buttonsListEditing.SelectedIndexChanged+=ButtonsListEditing_SelectedIndexChanged;
+            ListButtons(buttonsListEditing);
+
+            #endregion
+
+            #endregion
+
+            #region ColorPickerAndCheckBox
+            colorChecker.Size=new Size(150,25);
+            colorChecker.Text="Special color";
+            colorChecker.BackColor=creatingForm.BackColor;
+            colorChecker.BackColor2=creatingForm.BackColor2;
+            colorChecker.ForeColor=Color.White;
+            colorChecker.Location=new Point(180,430);
+            colorChecker.Visible=true;
+            colorChecker.Font=menuButton1.Font;
+            colorChecker.CheckedChanged+=ColorChecker_CheckedChanged;
+
+            buttonColor.Size=new Size(200,190);
+            buttonColor.Location=new Point(370,350);
+            buttonColor.Hide();
+
+            #endregion
+
+            #region messagesPanel
+
+            messagesPanel.WrapContents=false;
+            messagesPanel.FlowDirection=FlowDirection.BottomUp;
+            messagesPanel.Padding=new Padding(35,0,0,0);
+            messagesPanel.AutoScroll=true;
+            messagesPanel.Size = new Size(this.Width,leftpanel.Height-100);
+            messagesPanel.Top = this.Height - messagesPanel.Height-103;
+            messagesPanel.Anchor = AnchorStyles.Right | AnchorStyles.Left |AnchorStyles.Bottom|AnchorStyles.Top;
+            messagesPanel.Width = messagesPanel.Width - 8;
+            messagesPanel.Left = 4;
+            messagesPanel.BackColor=IronideColorizer.FromHex("363636");
+            messagesPanel.BackColor2=messagesPanel.BackColor;
+            messagesPanel.Visible=false;
+
+
+            #endregion
+
+            #region postTextBox
+
+            postTextBox.BorderThickness=0;
+            postTextBox.Size=new Size(900,200);
+            postTextBox.Location=new Point(45,10);
+            postTextBox.Left=(this.Width/2-behindPostTextBox.Width/2-postTextBox.Width/2+10);
+            postTextBox.Font= new Font("Tahoma",11);
+            postTextBox.BackColor=IronideColorizer.FromHtml("#383838");
+            postTextBox.ForeColor=Color.White;
+            postTextBox.Visible=false;
+            postTextBox.KeyDown+=PostTextBox_KeyDown;
+
+            behindPostTextBox.BorderThickness=0;
+            behindPostTextBox.Size=new Size(1000,45);
+            behindPostTextBox.Location=new Point(3,this.Height-80);
+            behindPostTextBox.Left=(this.Width-behindPostTextBox.Width)/2;
+            behindPostTextBox.BackColor=IronideColorizer.FromHtml("#383838");
+            behindPostTextBox.BackColor2=IronideColorizer.FromHtml("#383838");
+            behindPostTextBox.Anchor=AnchorStyles.Bottom;
+            behindPostTextBox.Region=IronideConvert.ToRoundedRegion(behindPostTextBox.ClientRectangle,25);
+            behindPostTextBox.Visible=false;
+
+
+            #endregion
+
+            #region buttonsList
+
+            buttonsList.Font=new Font("Microsoft Sans Serif",10);
+            buttonsList.Width=200;
+            buttonsList.Placeholder="Select a button";
+            buttonsList.PlaceholderAlign=ContentAlignment.MiddleCenter;
+            buttonsList.BackColor=Color.White;
+            buttonsList.BackColor=Color.White;
+            buttonsList.BorderColor=removingForm.BackColor;
+            buttonsList.HighlightColor=removingForm.BackColor;
+            buttonsList.Location=new Point(removingForm.Width/2-buttonsList.Width/2,100);
+            ListButtons(buttonsList);
+
+
+            #endregion
+
+            #region DockAlignment
+
+            leftpanel.Controls.Add(settingsButton);
+            leftpanel.Controls.Add(actionsPanel);
+            leftpanel.Controls.Add(actionsButton);
+            leftpanel.Controls.Add(menuPanel1);
+            leftpanel.Controls.Add(menuButton1);
+            leftpanel.Controls.Add(logoPanel1);
+            actionsPanel.Controls.Add(homepageButton);
+            actionsPanel.Controls.Add(removingButton);
+            actionsPanel.Controls.Add(editingButton);
+            actionsPanel.Controls.Add(creatingButton);
+            creatingForm.Controls.Add(createButton);
+            creatingForm.Controls.Add(name);
+            creatingForm.Controls.Add(nameLabel);
+            creatingForm.Controls.Add(desc);
+            creatingForm.Controls.Add(descLabel);
+            creatingForm.Controls.Add(colorChecker);
+            creatingForm.Controls.Add(buttonColor);
+            removingForm.Controls.Add(buttonsList);
+            removingForm.Controls.Add(removeButton);
+            editingForm.Controls.Add(nameEditing);
+            editingForm.Controls.Add(nameLabelEditing);
+            editingForm.Controls.Add(descEditing);
+            editingForm.Controls.Add(descLabelEditing);
+            editingForm.Controls.Add(buttonColorEditing);
+            editingForm.Controls.Add(buttonsListEditing);
+            editingForm.Controls.Add(colorCheckerEditing);
+            editingForm.Controls.Add(editButton);
+            Controls.Add(behindPostTextBox);
+            behindPostTextBox.Controls.Add(postTextBox);
+            Controls.Add(messagesPanel);
+            Controls.Add(mainPanel);
+            logoPanel1.Controls.Add(logopicture);
+
+            #endregion
+
+            #region bigOneRightClickMenu
+            bigOneRC.AutoSize=true;
+            bigOneRC.Items.Add(new IronideToolStripMenuItem("Edit this Diary",this.BackColor,Color.White,Color.DimGray));
+            bigOneRC.Items.Add(new IronideToolStripMenuItem("Remove this Diary",this.BackColor,Color.White,Color.DimGray));
+            bigOneRC.BackColor=this.BackColor;
+            bigOneRC.BackColor2=bigOneRC.BackColor;
+            bigOneRC.ItemMouseClick+=BigOneRC_ItemMouseClick;
+            bigOneRC.ItemClicked+=BigOneRC_ItemClicked;
+            #endregion
+
+
+        }
+
+        #region Events
+
+        
+
+        private void MenuPanel1_ControlRemoved(object sender,ControlEventArgs e) {
+            
+            if(menuPanel1.Controls.Count==0) {
+                menuPanel1.TextRender=true;
+            } else {
+                menuPanel1.Height=menuPanel1.Height - 40;
+            }
+            
+        }
+
+        private void PostTextBox_KeyDown(object sender,KeyEventArgs e) {
+            if(e.KeyCode==Keys.Enter) {
+                e.SuppressKeyPress=true;
+                if(postTextBox.Text!="") {
+                    createPost(postTextBox.Text,tablename);
+                    postTextBox.Text="";
+                    postTextBox.Focus();
+                    
+                } else {
+                    return;
+                }
+            }
+        }
+
+        public void listPosts(string content,string date) {
+            #region postpanel
+            IronidePanel postpanel = new IronidePanel();
+            postpanel.AutoSize = false;
+            postpanel.Name = "post" + i;
+            postpanel.BorderThickness = 0;
+            postpanel.ForeColor = Color.Black;
+            postpanel.BackColor=IronideColorizer.FromHex("282828");
+            postpanel.BackColor2=postpanel.BackColor;
+            i =i+5;
+            #endregion
+
+            #region Content
+            IronideLabel Content = new IronideLabel();
+            Content.AutoSize = true;
+            Content.Text = content;
+            Content.BackColor=Color.Transparent;
+            Content.BackColor2=Color.Transparent;
+            Content.ForeColor = Color.White;
+            Content.Font = new Font("Tahoma",14);
+            
+
+
+
+
+
+            #endregion
+
+            #region Date
+            IronideLabel Date = new IronideLabel();
+            Date.AutoSize=true;
+            Date.ForeColor=Color.White;
+            Date.BackColor=Color.Transparent;
+            Date.BackColor2=Color.Transparent;
+            Date.Text=date;
+            Date.Location=new Point(22,5);
+            Date.Font = new Font("Tahoma",8);
+            postpanel.Controls.Add(Date);
+            #endregion
+
+            #region size
+            postpanel.Controls.Add(Content);
+
+
+            postpanel.Height = Content.Height+30;
+            postpanel.Width = Content.Width+40;
+            if(Date.Width>Content.Width) {
+                postpanel.Width=Date.Width+40;
+            }
+            Content.Location = new Point((postpanel.Width / 2) - (Content.Width/2),postpanel.Height / 2 - Content.Height / 2+5);
+
+
+
+            #endregion
+
+            postpanel.Region = IronideConvert.ToRoundedRegion(postpanel.ClientRectangle,18);
+            messagesPanel.Controls.Add(postpanel);
+        }
+
+
+        private void createPost(string text,string table) {
+
+            #region postPanel
+            IronidePanel postPanel = new IronidePanel();
+            postPanel.AutoSize=false;
+            postPanel.Name="post"+i;
+            postPanel.BorderThickness=0;
+            postPanel.ForeColor=Color.Black;
+            postPanel.BackColor=IronideColorizer.FromHex("282828");
+            postPanel.BackColor2=postPanel.BackColor;
+
+
+            i=i+5;
+            #endregion
+
+            #region content
+
+            IronideLabel content = new IronideLabel();
+            content.AutoSize=true;
+            content.BackColor=Color.Transparent;
+            content.BackColor2=Color.Transparent;
+            content.ForeColor=Color.White;
+            content.Font=new Font("Tahoma",14);
+            text=IronideWrapper.WordWrapPxStr(text,content.Font,800);
+            content.Text=text;
+
+            #endregion
+
+            #region date
+            IronideLabel date = new IronideLabel();
+            date.AutoSize=true;
+            date.ForeColor=Color.White;
+            date.BackColor=Color.Transparent;
+            date.BackColor2=date.BackColor;
+            date.Text=DateTime.Now.ToString("MMM dd yyyy");
+            date.Location=new Point(22,5);
+            date.Font=new Font("Tahoma",8);
+            #endregion
+
+            postPanel.Controls.Add(date);
+            postPanel.Controls.Add(content);
+
+            #region size
+            postPanel.Height=content.Height+30;
+            postPanel.Width=content.Width+40;
+
+            if(date.Width>content.Width) {
+                postPanel.Width=date.Width+40;
+            }
+            #endregion
+            content.Location=new Point((postPanel.Width/2) - (content.Width/2),postPanel.Height/2-content.Height/2+5);
+
+            postPanel.Region=IronideConvert.ToRoundedRegion(postPanel.ClientRectangle,18);
+            messagesPanel.Controls.Add(postPanel);
+            postPanel.Visible=true;
+
+            
+            db.AddData(tablename,"content",content.Text);
+            db.UpdateLastData(tablename,"date",date.Text);
+
+
+        }
+
+
+        private void refresh() {
+            mainPanel.Controls.Clear();
+            menuPanel1.Controls.Clear();
+            MochaTableResult mt = db.ExecuteScalarTable("USE * FROM Diaries RETURN");
+            for(int i = 0; i < mt.Rows.Length; i++) {
+                createButtons(mt.Rows[i].Datas[0].ToString(),mt.Rows[i].Datas[1].ToString(),mt.Rows[i].Datas[2].ToString());
+            }
+        }
+
+        private void BigOneRC_ItemMouseClick(object sender,MouseEventArgs e) {
+            ToolStripMenuItem asd = (ToolStripMenuItem)sender;
+        }
+
+        private void EditButton_Click1(object sender,EventArgs e) {
+            var buttonname = "D"+buttonsListEditing.SelectedItem;
+            var dex = db.GetDataIndex("Diaries","names",buttonname);
+            db.UpdateData("Diaries","names",dex,"D"+nameEditing.Text);
+            db.UpdateData("Diaries","descs",dex,descEditing.Text);
+            if(colorCheckerEditing.Checked==true) {
+                db.UpdateData("Diaries","color",dex,IronideColorizer.ToHtml(buttonColorEditing.Color));
+            }
+            db.RenameTable(buttonname,"D"+nameEditing.Text);
+            mainPanel.Controls.Clear();
+            menuPanel1.Controls.Clear();
+            MochaTableResult mt = db.ExecuteScalarTable("USE * FROM Diaries RETURN");
+            for(int i = 0; i < mt.Rows.Length; i++) {
+                createButtons(mt.Rows[i].Datas[0].ToString(),mt.Rows[i].Datas[1].ToString(),mt.Rows[i].Datas[2].ToString());
+
+            }
+            editingForm.Close();
+
+        }
+
+        private void BigOneRC_ItemClicked(object sender,ToolStripItemClickedEventArgs e) {
+            
+            var buttonname = "D"+bigOneRC.SourceControl.Name;
+            if(e.ClickedItem.Text=="Edit this Diary") {
+                var dex = db.GetDataIndex("Diaries","names",buttonname);
+                buttonsListEditing.SelectedIndex=dex;
+                editingForm.ShowDialog();
+            }
+            if(e.ClickedItem.Text=="Remove this Diary") {
+                if(MessageBox.Show("Are you sure to remove this diary?","Remove a Diary",MessageBoxButtons.YesNo,MessageBoxIcon.Question)==DialogResult.Yes) {
+                    db.RemoveTable(buttonname);
+                    db.RemoveRow("Diaries",db.GetDataIndex("Diaries","names",buttonname));
+                    //mainPanel.Controls.RemoveByKey(buttonname);
+                    refresh();
+                    ListButtons(buttonsListEditing);
+                    ListButtons(buttonsList);
+                    
+                } else {
+
+                }
+            }
+        }
+
+        private void HomepageButton_Click(object sender,EventArgs e) {
+            goToHomepage();
+        }
+        
+
+        private void ColorCheckerEditing_CheckedChanged(object sender,EventArgs e) {
+            if(colorCheckerEditing.Checked==true){
+                buttonColorEditing.Show();
+            }else {
+                buttonColorEditing.Hide();
+            }
+        }
+
+        private void goToHomepage() {
+            
+            mainPanel.Show();
+            messagesPanel.Hide();
+            behindPostTextBox.Hide();
+        }
+
+        private void ButtonsListEditing_SelectedIndexChanged(object sender,EventArgs e) {
+            descEditing.Enabled=true;
+            nameEditing.Enabled=true;
+            buttonColorEditing.Enabled=true;
+            var buttonname = "D"+buttonsListEditing.Items[buttonsListEditing.SelectedIndex];
+            nameEditing.Text=buttonname.Substring(1).ToString();
+            var dex = db.GetDataIndex("Diaries","names",buttonname);
+            var buttondesc = db.GetData("Diaries","descs",dex);
+            descEditing.Text=buttondesc.ToString();
+            var buttoncolor = db.GetData("Diaries","color",dex);
+            buttonColorEditing.Color=IronideColorizer.FromHtml(buttoncolor.ToString());
+
+
+        }
+
+        private void EditButton_Click(object sender,EventArgs e) {
+            descEditing.Text="";
+            nameEditing.Text="";
+            buttonsListEditing.Placeholder="Select a button";
+            if(buttonsListEditing.SelectedIndex<0) {
+                descEditing.Enabled=false;
+                nameEditing.Enabled=false;
+                buttonColorEditing.Enabled=false;
+            }
+            if(mainPanel.Controls.Count<1) {
+                buttonsListEditing.Enabled=false;
+            }
+            editingForm.ShowDialog();
+            ListButtons(buttonsListEditing);
+        }
+
+        
+        private void RemoveButton_Click(object sender,EventArgs e) {
+            if(buttonsList.SelectedIndex!=-1) {
+                if(MessageBox.Show("Are you sure to remove this diary?","Remove a Diary",MessageBoxButtons.YesNo,MessageBoxIcon.Question)==DialogResult.Yes) {
+                    db.RemoveTable("D"+buttonsList.SelectedItem.ToString());
+                    db.RemoveRow("Diaries",db.GetDataIndex("Diaries","names","D"+buttonsList.SelectedItem));
+                    goToHomepage();
+                    refresh();
+                    menuPanel1.Height-=40;
+                    removingForm.Close();
+                    ListButtons(buttonsList);
+                } else {
+
+                }
+            }
+            
+            
+        }
+
+        
+        private void MainPanel_ControlAdded(object sender,ControlEventArgs e) {
+            ListButtons(buttonsList);
+            ListButtons(buttonsListEditing);
+        }
+
+        private void RemovingButton_Click(object sender,EventArgs e) {
+            if(mainPanel.Controls.Count>0) {
+                buttonsList.Enabled=true;
+            } else {
+                buttonsList.Enabled=false;
+            }
+            removingForm.ShowDialog();
+            
+        }
+
+        private void ListButtons(IronideComboBox combobox) {
+            combobox.Items.Clear();
+            foreach(IronideButton b in mainPanel.Controls) {
+                combobox.Items.Add(b.Name);
+            }
+        }
+
+        private void ColorChecker_CheckedChanged(object sender,EventArgs e) {
+            if(colorChecker.Checked==true) {
+                buttonColor.Show();
+            } else {
+                buttonColor.Hide();
+            }
+        }
+
+        
+        private void CreateButton_Click(object sender, EventArgs e)
+        {
+            
+            
+
+            
+            #region diaryButton
+            IronideButton diaryButton = new IronideButton();
+            diaryButton.Name = name.Text;
+            diaryButton.Size = new Size(251, 40);
+            diaryButton.Text = "  "+name.Text;
+            diaryButton.Font = new Font("Microsoft Sans Serif", 12, FontStyle.Regular);
+            diaryButton.Dock = DockStyle.Top;
+            diaryButton.TextAlign = ContentAlignment.MiddleLeft;
+            diaryButton.BorderThickness = 0;
+            diaryButton.BackColor = IronideColorizer.FromHtml("#484848");
+            diaryButton.BackColor2 = diaryButton.BackColor;
+            diaryButton.EnterColor = IronideColorizer.FromHtml("#262626");
+            diaryButton.HoverColor = IronideColorizer.FromHtml("#4d4d4d");
+            diaryButton.ForeColor = Color.White;
+            if(menuPanel1.TextRender == true) {
+                menuPanel1.TextRender = false;
+            }
+            diaryButton.MouseClick += BigDiaryButton_MouseClick;
+
+
+            #endregion
+
+            #region bigDiaryButton
+            IronideButton bigDiaryButton = new IronideButton();
+            bigDiaryButton.Size= new Size(384,186);
+            if(colorChecker.Checked==true) {
+                bigDiaryButton.BorderThickness=3;
+                bigDiaryButton.BorderColor=buttonColor.Color;
+            } else {
+                bigDiaryButton.BorderThickness=0;
+                
+
+            }
+            
+            bigDiaryButton.BackColor=IronideColorizer.FromHtml("#595959");
+            bigDiaryButton.HoverColor=IronideColorizer.FromHtml("#6f6f73");
+            bigDiaryButton.EnterColor=IronideColorizer.FromHtml("#595959");
+            bigDiaryButton.Font=new Font("Microsoft Sans Serif",12,FontStyle.Regular);
+            bigDiaryButton.ForeColor=Color.White;
+            bigDiaryButton.BackColor2=bigDiaryButton.BackColor;
+            bigDiaryButton.Anchor=AnchorStyles.Left|AnchorStyles.Right|AnchorStyles.Top;
+            bigDiaryButton.Name=name.Text;
+            bigDiaryButton.Text=name.Text+"\n\n\n"+desc.Text;
+            bigDiaryButton.ContextMenuStrip=bigOneRC;
+            bigDiaryButton.MouseClick+=BigDiaryButton_MouseClick;
+
+
+            #endregion
+
+            db.AddData("Diaries","names","D"+name.Text);
+            name.Text=name.Text.Replace(" ",String.Empty);
+            if(db.ExistsTable("D"+name.Text)==true) {
+                MessageBox.Show("Sorry, there is a diary with the same name","Name Error",MessageBoxButtons.OK,MessageBoxIcon.Error);
+            } else {
+                db.CreateTable("D"+name.Text);
+                db.AddColumn("D"+name.Text,new MochaColumn("content"));
+                db.AddColumn("D"+name.Text,new MochaColumn("date"));
+                
+                db.UpdateLastData("Diaries","descs",desc.Text);
+
+                if(bigDiaryButton.BorderThickness>0) {
+                    db.UpdateLastData("Diaries","color",IronideColorizer.ToHtml(bigDiaryButton.BorderColor));
+                } else {
+                    db.UpdateLastData("Diaries","color",IronideColorizer.ToHtml(Color.Transparent));
+                }
+                mainPanel.Controls.Add(bigDiaryButton);
+                menuPanel1.Controls.Add(diaryButton);
+                desc.Text = "";
+                name.Text = "";
+                creatingForm.Close();
+
+            }
+            
+        }
+
+        public void createButtons(string buttonName,string buttonDesc,string color) {
+            #region bigOne
+            IronideButton bigDiaryButton = new IronideButton();
+            bigDiaryButton.Size= new Size(384,186);
+            bigDiaryButton.BorderColor=IronideColorizer.FromHtml(color);
+            bigDiaryButton.BackColor=IronideColorizer.FromHtml("#595959");
+            bigDiaryButton.HoverColor=IronideColorizer.FromHtml("#6f6f73");
+            bigDiaryButton.EnterColor=IronideColorizer.FromHtml("#595959");
+            bigDiaryButton.Font=new Font("Microsoft Sans Serif",12,FontStyle.Regular);
+            bigDiaryButton.ForeColor=Color.White;
+            bigDiaryButton.BackColor2=bigDiaryButton.BackColor;
+            bigDiaryButton.Anchor=AnchorStyles.Left|AnchorStyles.Right|AnchorStyles.Top; ;
+            bigDiaryButton.Name=buttonName.Substring(1);
+            bigDiaryButton.Text=buttonName.Substring(1)+"\n\n\n"+buttonDesc;
+            bigDiaryButton.ContextMenuStrip=bigOneRC;
+            bigDiaryButton.MouseClick+=BigDiaryButton_MouseClick;
+            mainPanel.Controls.Add(bigDiaryButton);
+            #endregion
+
+            #region littleOne
+
+            IronideButton diaryButton = new IronideButton();
+            diaryButton.Name = buttonName.Substring(1);
+            diaryButton.Size = new Size(251,40);
+            diaryButton.Text = "  "+buttonName.Substring(1);
+            diaryButton.Font = new Font("Microsoft Sans Serif",12,FontStyle.Regular);
+            diaryButton.Dock = DockStyle.Top;
+            diaryButton.TextAlign = ContentAlignment.MiddleLeft;
+            diaryButton.BorderThickness = 0;
+            diaryButton.BackColor = IronideColorizer.FromHtml("#484848");
+            diaryButton.BackColor2 = diaryButton.BackColor;
+            diaryButton.EnterColor = IronideColorizer.FromHtml("#262626");
+            diaryButton.HoverColor = IronideColorizer.FromHtml("#4d4d4d");
+            diaryButton.ForeColor = Color.White;
+            if(menuPanel1.TextRender == true) {
+                menuPanel1.TextRender = false;
+            }
+            diaryButton.MouseClick += BigDiaryButton_MouseClick;
+            menuPanel1.Controls.Add(diaryButton);
+            
+
+
+            #endregion
+
+            
+        }
+
+        private void MenuPanel1_ControlAdded(object sender,ControlEventArgs e) {
+            menuPanel1.Height=menuPanel1.Height+40;
+
+        }
+
+        private void BigDiaryButton_MouseClick(object sender,MouseEventArgs e) {
+            IronideButton asd = sender as IronideButton;
+            
+            
+            if(e.Button == MouseButtons.Left) {
+                if(messagesPanel.Visible==false&&postTextBox.Visible==false) {
+                    tablename = "D"+asd.Name.Replace(" ",String.Empty);
+                    messagesPanel.Show();
+                    postTextBox.Show();
+                    behindPostTextBox.Show();
+                    messagesPanel.Controls.Clear();
+                    MochaTable mt = db.GetTable($"{tablename}");
+                    /*for(int a = mt.Rows.Count; a > 0; a--) {
+                        listPosts(mt.Rows[a-1].Datas[0].ToString(),mt.Rows[a-1].Datas[1].ToString());
+
+                    }*/
+                    for(int a = 0; a < mt.Rows.Count; a++) {
+                        listPosts(mt.Rows[a].Datas[0].ToString(),mt.Rows[a].Datas[1].ToString());
+                    }
+
+                }
+                mainPanel.Hide();
+            }
+            
+        }
+
+        private void AddingButton_Click(object sender, EventArgs e)
+        {
+            
+            
+            creatingForm.ShowDialog();
+            
+
+        }
+        
+        private void ActionsButton_Click(object sender, EventArgs e)
+        {
+            if(actionsPanel.Visible==false) {
+                actionsPanel.Show();
+            } else {
+                actionsPanel.Hide();
+            }
+            
+        }
+        
+        private void MenuButton1_Click(object sender, EventArgs e)
+        {
+            if(menuPanel1.Visible==false) {
+                menuPanel1.Show();
+            } else {
+                menuPanel1.Hide();
+            }
+        }
+
+        private void openbutton_Click(object sender, EventArgs e)
+        {
+            openbutton.Visible=false;
+            leftpanel.Toggle();
+            openbutton.Visible=true;
+            
+            if (leftpanel.Visible == false)
+            {
+                mainPanel.Location=new Point(BorderThickness,mainPanel.Location.Y);
+                mainPanel.Size=new Size(Width-BorderThickness*2,mainPanel.Height);
+                messagesPanel.Location=new Point(BorderThickness,messagesPanel.Location.Y);
+                messagesPanel.Size=new Size(Width-BorderThickness*2,messagesPanel.Height);
+                openbutton.Left -= leftpanel.Width;
+                behindPostTextBox.Width+=leftpanel.Width;
+                behindPostTextBox.Left-=leftpanel.Width;
+                postTextBox.Width+=leftpanel.Width;
+                behindPostTextBox.Region=IronideConvert.ToRoundedRegion(behindPostTextBox.ClientRectangle,25);
+            }
+            else
+            {
+                mainPanel.Location=new Point(leftpanel.Width,mainPanel.Location.Y);
+                mainPanel.Size=new Size((Width-mainPanel.Location.X)-BorderThickness,mainPanel.Height);
+                messagesPanel.Location=new Point(leftpanel.Width+3,messagesPanel.Location.Y);
+                messagesPanel.Size=new Size((Width-messagesPanel.Location.X)-BorderThickness,messagesPanel.Height);
+                openbutton.Left += leftpanel.Width;
+                //postTextBox.Width=messagesPanel.Width-100;
+                //postTextBox.Left=leftpanel.Width+((messagesPanel.Width-postTextBox.Width)/2);
+                behindPostTextBox.Width-=leftpanel.Width;
+                behindPostTextBox.Left+=leftpanel.Width;
+                postTextBox.Width-=leftpanel.Width;
+                behindPostTextBox.Region=IronideConvert.ToRoundedRegion(behindPostTextBox.ClientRectangle,25);
+
+
+            }
+            
+        }
+
+
+        #endregion
+    }
+}
