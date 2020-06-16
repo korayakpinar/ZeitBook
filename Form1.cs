@@ -569,7 +569,7 @@ namespace İronideDeneme
 
             messagesPanel.WrapContents=false;
             messagesPanel.FlowDirection=FlowDirection.BottomUp;
-            messagesPanel.Padding=new Padding(35,0,0,0);
+            messagesPanel.Padding=new Padding(65,0,0,0);
             messagesPanel.AutoScroll=true;
             messagesPanel.Size = new Size(this.Width,leftpanel.Height-100);
             messagesPanel.Top = this.Height - messagesPanel.Height-103;
@@ -702,7 +702,7 @@ namespace İronideDeneme
             }
         }
 
-        public void listPosts(string content,string date) {
+        public void listPosts(string content,string date,string time) {
             #region postpanel
             IronidePanel postpanel = new IronidePanel();
             postpanel.AutoSize = false;
@@ -742,14 +742,27 @@ namespace İronideDeneme
             postpanel.Controls.Add(Date);
             #endregion
 
+            #region postTime
+            IronideLabel postTime = new IronideLabel();
+            postTime.AutoSize=true;
+            postTime.ForeColor=Color.Gray;
+            postTime.BackColor=Color.Transparent;
+            postTime.BackColor2=postTime.BackColor;
+            postTime.Text=time;
+            postTime.Location=new Point(Date.Width/2+postTime.Width/2+5,5);
+            postTime.Font=new Font("Tahoma",8);
+
+            #endregion
+            postpanel.Controls.Add(postTime);
+
             #region size
             postpanel.Controls.Add(Content);
 
 
             postpanel.Height = Content.Height+30;
             postpanel.Width = Content.Width+40;
-            if(Date.Width>Content.Width) {
-                postpanel.Width=Date.Width+40;
+            if(Date.Width+postTime.Width>Content.Width) {
+                postpanel.Width=Date.Width+postTime.Width+40;
             }
             Content.Location = new Point((postpanel.Width / 2) - (Content.Width/2),postpanel.Height / 2 - Content.Height / 2+5);
 
@@ -801,6 +814,18 @@ namespace İronideDeneme
             date.Font=new Font("Tahoma",8);
             #endregion
 
+            #region time
+            IronideLabel time = new IronideLabel();
+            time.AutoSize=true;
+            time.ForeColor=Color.Gray;
+            time.BackColor=Color.Transparent;
+            time.BackColor2=time.BackColor;
+            time.Text=DateTime.Now.ToString("H:mm");
+            time.Location=new Point(date.Width/2+time.Width/2-10,5);
+            time.Font=new Font("Tahoma",8);
+
+            #endregion
+            postPanel.Controls.Add(time);
             postPanel.Controls.Add(date);
             postPanel.Controls.Add(content);
 
@@ -808,8 +833,8 @@ namespace İronideDeneme
             postPanel.Height=content.Height+30;
             postPanel.Width=content.Width+40;
 
-            if(date.Width>content.Width) {
-                postPanel.Width=date.Width+40;
+            if(date.Width+time.Width>content.Width) {
+                postPanel.Width=date.Width+time.Width+40;
             }
             #endregion
             content.Location=new Point((postPanel.Width/2) - (content.Width/2),postPanel.Height/2-content.Height/2+5);
@@ -821,6 +846,7 @@ namespace İronideDeneme
             
             db.AddData(tablename,"content",content.Text);
             db.UpdateLastData(tablename,"date",date.Text);
+            db.UpdateLastData(tablename,"time",time.Text);
 
 
         }
@@ -1047,7 +1073,8 @@ namespace İronideDeneme
                 db.CreateTable("D"+name.Text);
                 db.AddColumn("D"+name.Text,new MochaColumn("content"));
                 db.AddColumn("D"+name.Text,new MochaColumn("date"));
-                
+                db.AddColumn("D"+name.Text,new MochaColumn("time"));
+
                 db.UpdateLastData("Diaries","descs",desc.Text);
 
                 if(bigDiaryButton.BorderThickness>0) {
@@ -1134,7 +1161,7 @@ namespace İronideDeneme
 
                     }*/
                     for(int a = 0; a < mt.Rows.Count; a++) {
-                        listPosts(mt.Rows[a].Datas[0].ToString(),mt.Rows[a].Datas[1].ToString());
+                        listPosts(mt.Rows[a].Datas[0].ToString(),mt.Rows[a].Datas[1].ToString(),mt.Rows[a].Datas[2].ToString());
                     }
 
                 }
