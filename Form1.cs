@@ -708,6 +708,8 @@ namespace İronideDeneme
             postpanel.ForeColor = Color.Black;
             postpanel.BackColor=IronideColorizer.FromHex("282828");
             postpanel.BackColor2=postpanel.BackColor;
+            postpanel.MouseEnter+=PostPanel_MouseEnter;
+            postpanel.MouseLeave+=PostPanel_MouseLeave;
             i =i+5;
             #endregion
 
@@ -719,6 +721,8 @@ namespace İronideDeneme
             Content.BackColor2=Color.Transparent;
             Content.ForeColor = Color.White;
             Content.Font = new Font("Tahoma",14);
+            Content.MouseEnter+=Parent_MouseEnter;
+            Content.MouseLeave+=Parent_MouseLeave;
             
 
 
@@ -736,6 +740,8 @@ namespace İronideDeneme
             Date.Text=date;
             Date.Location=new Point(22,5);
             Date.Font = new Font("Tahoma",8);
+            Date.MouseEnter+=Parent_MouseEnter;
+            Date.MouseLeave+=Parent_MouseLeave;
             postpanel.Controls.Add(Date);
             #endregion
 
@@ -748,6 +754,8 @@ namespace İronideDeneme
             postTime.Text=time;
             postTime.Location=new Point(Date.Width/2+postTime.Width/2+5,5);
             postTime.Font=new Font("Tahoma",8);
+            postTime.MouseEnter+=Parent_MouseEnter;
+            postTime.MouseLeave+=Parent_MouseLeave;
 
             #endregion
             postpanel.Controls.Add(postTime);
@@ -782,6 +790,8 @@ namespace İronideDeneme
             postPanel.ForeColor=Color.Black;
             postPanel.BackColor=IronideColorizer.FromHex("282828");
             postPanel.BackColor2=postPanel.BackColor;
+            postPanel.MouseEnter+=PostPanel_MouseEnter;
+            postPanel.MouseLeave+=PostPanel_MouseLeave;
 
 
             i=i+5;
@@ -797,7 +807,8 @@ namespace İronideDeneme
             content.Font=new Font("Tahoma",14);
             text=IronideWrapper.WordWrapPxStr(text,content.Font,800);
             content.Text=text;
-
+            content.MouseEnter+=Parent_MouseEnter;
+            content.MouseLeave+=Parent_MouseLeave;
             #endregion
 
             #region date
@@ -809,6 +820,8 @@ namespace İronideDeneme
             date.Text=DateTime.Now.ToString("MMM dd yyyy");
             date.Location=new Point(22,5);
             date.Font=new Font("Tahoma",8);
+            date.MouseEnter+=Parent_MouseEnter;
+            date.MouseLeave+=Parent_MouseLeave;
             #endregion
 
             #region time
@@ -820,6 +833,8 @@ namespace İronideDeneme
             time.Text=DateTime.Now.ToString("H:mm");
             time.Location=new Point(date.Width/2+time.Width/2-10,5);
             time.Font=new Font("Tahoma",8);
+            time.MouseEnter+=Parent_MouseEnter;
+            time.MouseLeave+=Parent_MouseLeave;
 
             #endregion
             postPanel.Controls.Add(time);
@@ -848,6 +863,29 @@ namespace İronideDeneme
 
         }
 
+        private void Parent_MouseEnter(object sender,EventArgs e) {
+            IronidePanel panel = ((Control)sender).Parent as IronidePanel;
+            panel.BackColor = IronideColorizer.FromHex("222222");
+            panel.BackColor2=IronideColorizer.FromHex("222222");
+        }
+
+        private void Parent_MouseLeave(object sender,EventArgs e) {
+            IronidePanel panel = ((Control)sender).Parent as IronidePanel;
+            panel.BackColor = IronideColorizer.FromHex("282828");
+            panel.BackColor2=IronideColorizer.FromHex("282828");
+        }
+
+        private void PostPanel_MouseLeave(object sender,EventArgs e) {
+            IronidePanel panel = sender as IronidePanel;
+            panel.BackColor=IronideColorizer.FromHex("282828");
+            panel.BackColor2=IronideColorizer.FromHex("282828");
+        }
+
+        private void PostPanel_MouseEnter(object sender,EventArgs e) {
+            IronidePanel panel = sender as IronidePanel;
+            panel.BackColor= IronideColorizer.FromHex("222222");
+            panel.BackColor2=IronideColorizer.FromHex("222222");
+        }
 
         private void refresh() {
             mainPanel.Controls.Clear();
