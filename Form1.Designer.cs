@@ -94,7 +94,7 @@
             this.MinimizeBoxEnterColor = System.Drawing.Color.DimGray;
             this.MinimizeBoxHoverColor = System.Drawing.Color.DimGray;
             this.Name = "Form1";
-            this.Title = "Zeit";
+            this.Title = "ZeitBook";
             this.TitlebarBackColor = System.Drawing.Color.AliceBlue;
             this.TitlebarIconWidth = 25;
             this.Controls.SetChildIndex(this.leftpanel, 0);
