@@ -7,8 +7,7 @@ using MochaDB;
 using MochaDB.Querying;
 using MochaDB.Mhql;
 using System.Linq;
-using System.Security.Cryptography;
-using Zeit.Properties;
+using ZeitBook.Properties;
 
 namespace İronideDeneme
 {
@@ -17,7 +16,6 @@ namespace İronideDeneme
         int i = 10;
         string tablename = "";
         MochaDatabase db = new MochaDatabase("path=Zeit;AutoConnect=true");
-        //string bordercolor= "#1a66ff";
         #region Components
 
         IronideSlidePanel menuPanel1 = new IronideSlidePanel();
@@ -436,7 +434,6 @@ namespace İronideDeneme
             
 
             logopicture.Location = new Point((logoPanel1.Width / 2) - logopicture.Height / 2, (logoPanel1.Height / 2) - logopicture.Width / 2);
-            //logopicture.Location = new Point((mainPanel.Width/2)- logopicture.Height/2, (mainPanel.Height/2)- logopicture.Width/2);
             logopicture.Anchor = AnchorStyles.None;
 
             #endregion
@@ -897,7 +894,6 @@ namespace İronideDeneme
                 if(MessageBox.Show("Are you sure to remove this diary?","Remove a Diary",MessageBoxButtons.YesNo,MessageBoxIcon.Question)==DialogResult.Yes) {
                     db.RemoveTable(buttonname);
                     db.RemoveRow("Diaries",db.GetDataIndex("Diaries","names",buttonname));
-                    //mainPanel.Controls.RemoveByKey(buttonname);
                     refresh();
                     ListButtons(buttonsListEditing);
                     ListButtons(buttonsList);
