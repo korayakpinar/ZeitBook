@@ -664,7 +664,6 @@ namespace İronideDeneme
             bigOneRC.Items.Add(new IronideToolStripMenuItem("Remove this Diary",this.BackColor,Color.White,Color.DimGray));
             bigOneRC.BackColor=this.BackColor;
             bigOneRC.BackColor2=bigOneRC.BackColor;
-            bigOneRC.ItemMouseClick+=BigOneRC_ItemMouseClick;
             bigOneRC.ItemClicked+=BigOneRC_ItemClicked;
             #endregion
 
@@ -896,9 +895,7 @@ namespace İronideDeneme
             }
         }
 
-        private void BigOneRC_ItemMouseClick(object sender,MouseEventArgs e) {
-            ToolStripMenuItem asd = (ToolStripMenuItem)sender;
-        }
+        
 
         private void EditButton_Click1(object sender,EventArgs e) {
             var buttonname = "D"+buttonsListEditing.SelectedItem;
