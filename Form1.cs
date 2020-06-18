@@ -28,9 +28,10 @@ namespace İronideDeneme
         IronideForm creatingForm = new IronideForm();
         IronideForm removingForm = new IronideForm();
         IronideForm editingForm = new IronideForm();
+        IronideForm aboutForm = new IronideForm();
         IronideButton menuButton1 = new IronideButton();
         IronidePanel logoPanel1 = new IronidePanel();
-        IronideButton settingsButton = new IronideButton();
+        IronideButton aboutButton = new IronideButton();
         IronideButton actionsButton = new IronideButton();
         IronideButton creatingButton = new IronideButton();
         IronideButton removingButton = new IronideButton();
@@ -187,20 +188,21 @@ namespace İronideDeneme
 
             #region AllButtons
 
-            #region settingsButton
+            #region aboutButton
 
-            settingsButton.Name = "setttingsButton";
-            settingsButton.Size = new Size(251, 40);
-            settingsButton.Text = "Settings";
-            settingsButton.Font = new Font("Microsoft Sans Serif", 12, FontStyle.Regular);
-            settingsButton.ForeColor = Color.White;
-            settingsButton.BorderThickness = 0;
-            settingsButton.TextAlign = ContentAlignment.MiddleCenter;
-            settingsButton.BackColor = IronideColorizer.FromHtml("#303030");
-            settingsButton.BackColor2 = settingsButton.BackColor;
-            settingsButton.EnterColor = IronideColorizer.FromHtml("#363636");
-            settingsButton.HoverColor = IronideColorizer.FromHtml("#383838");
-            settingsButton.Dock = DockStyle.Top;
+            aboutButton.Name = "setttingsButton";
+            aboutButton.Size = new Size(251, 40);
+            aboutButton.Text = "About ZeitBook";
+            aboutButton.Font = new Font("Microsoft Sans Serif", 12, FontStyle.Regular);
+            aboutButton.ForeColor = Color.White;
+            aboutButton.BorderThickness = 0;
+            aboutButton.TextAlign = ContentAlignment.MiddleCenter;
+            aboutButton.BackColor = IronideColorizer.FromHtml("#303030");
+            aboutButton.BackColor2 = aboutButton.BackColor;
+            aboutButton.EnterColor = IronideColorizer.FromHtml("#363636");
+            aboutButton.HoverColor = IronideColorizer.FromHtml("#383838");
+            aboutButton.Dock = DockStyle.Top;
+            aboutButton.Click+=AboutButton_Click;
 
             #endregion
 
@@ -434,6 +436,68 @@ namespace İronideDeneme
 
             #endregion
 
+            #region aboutForm
+
+            aboutForm.Size = new Size(800,550);
+            aboutForm.BackColor = IronideColorizer.FromHex("3f3f3f");
+            aboutForm.BackColor2 = IronideColorizer.FromHex("3f3f3f");
+            aboutForm.BorderThickness = 1;
+            aboutForm.BorderColor = Color.Silver;
+            aboutForm.Animation = IronideFormAnimation.Fade;
+            aboutForm.AnimationDelay = 15;
+            aboutForm.ShowIcon = false;
+            aboutForm.TitlebarIconWidth = 0;
+            aboutForm.MaximizeBox = false;
+            aboutForm.MinimizeBox = false;
+            aboutForm.ResizeDoubleClick = false;
+            aboutForm.Title = "";
+            aboutForm.TitlebarForeColor = Color.White;
+            aboutForm.TitlebarBackColor = aboutForm.BackColor;
+            aboutForm.CloseBoxHoverColor = Color.Red;
+            aboutForm.ShowInTaskbar = false;
+
+            #endregion
+
+            #endregion
+
+            #region aboutZeitBook
+
+            IronideLabel about = new IronideLabel();
+            about.Text="About ZeitBook";
+            about.AutoSize=true;
+            about.Font=new Font("Tahoma",14);
+            about.ForeColor=Color.White;
+            about.BackColor=Color.Transparent;
+            about.BackColor2=about.BackColor;
+            about.Location=new Point(aboutForm.Width/2-about.Width/2-20,75);
+
+            IronideLabel copyright = new IronideLabel();
+            copyright.Text="Copyright © 2020 Koray Akpınar";
+            copyright.AutoSize=true;
+            copyright.Font=new Font("Tahoma",14);
+            copyright.ForeColor=Color.White;
+            copyright.BackColor=Color.Transparent;
+            copyright.BackColor2=copyright.BackColor;
+            copyright.Location=new Point(aboutForm.Width/2-copyright.Width/2-85,150);
+
+            IronideLabel aboutVersion = new IronideLabel();
+            aboutVersion.Text="Version 1.0.0";
+            aboutVersion.AutoSize=true;
+            aboutVersion.Font=new Font("Tahoma",14);
+            aboutVersion.ForeColor=Color.White;
+            aboutVersion.BackColor=Color.Transparent;
+            aboutVersion.BackColor2=aboutVersion.BackColor;
+            aboutVersion.Location=new Point(aboutForm.Width/2-aboutVersion.Width/2-20,200);
+
+            IronideLabel aboutText = new IronideLabel();
+            aboutText.Text="ZeitBook is an electronic diary where you can keep your memories, regardless of size.";
+            aboutText.AutoSize=true;
+            aboutText.Font=new Font("Tahoma",14);
+            aboutText.ForeColor=Color.White;
+            aboutText.BackColor=Color.Transparent;
+            aboutText.BackColor2=aboutText.BackColor;
+            aboutText.Location=new Point(aboutForm.Width/2-aboutText.Width/2-310,250);
+
             #endregion
 
             #region logoPicture
@@ -636,7 +700,7 @@ namespace İronideDeneme
 
             #region DockAlignment
 
-            leftpanel.Controls.Add(settingsButton);
+            leftpanel.Controls.Add(aboutButton);
             leftpanel.Controls.Add(actionsPanel);
             leftpanel.Controls.Add(actionsButton);
             leftpanel.Controls.Add(menuPanel1);
@@ -663,6 +727,10 @@ namespace İronideDeneme
             editingForm.Controls.Add(buttonsListEditing);
             editingForm.Controls.Add(colorCheckerEditing);
             editingForm.Controls.Add(editButton);
+            aboutForm.Controls.Add(about);
+            aboutForm.Controls.Add(copyright);
+            aboutForm.Controls.Add(aboutVersion);
+            aboutForm.Controls.Add(aboutText);
             Controls.Add(behindPostTextBox);
             behindPostTextBox.Controls.Add(postTextBox);
             Controls.Add(messagesPanel);
@@ -680,6 +748,10 @@ namespace İronideDeneme
             bigOneRC.ItemClicked+=BigOneRC_ItemClicked;
             #endregion
 
+        }
+
+        private void AboutButton_Click(object sender,EventArgs e) {
+            aboutForm.ShowDialog();
         }
 
         #region Events
@@ -817,7 +889,6 @@ namespace İronideDeneme
             messagesPanel.Controls.Add(postpanel);
         }
 
-
         private void createPost(string text,string table) {
 
             #region postPanel
@@ -937,8 +1008,6 @@ namespace İronideDeneme
             }
         }
 
-        
-
         private void EditButton_Click1(object sender,EventArgs e) {
             var buttonname = "D"+buttonsListEditing.SelectedItem;
             var dex = db.GetDataIndex("Diaries","names",buttonname);
@@ -985,7 +1054,6 @@ namespace İronideDeneme
             goToHomepage();
         }
         
-
         private void ColorCheckerEditing_CheckedChanged(object sender,EventArgs e) {
             if(colorCheckerEditing.Checked==true){
                 buttonColorEditing.Show();
@@ -1031,7 +1099,6 @@ namespace İronideDeneme
             editingForm.ShowDialog();
             ListButtons(buttonsListEditing);
         }
-
         
         private void RemoveButton_Click(object sender,EventArgs e) {
             if(buttonsList.SelectedIndex!=-1) {
@@ -1051,7 +1118,6 @@ namespace İronideDeneme
             
         }
 
-        
         private void MainPanel_ControlAdded(object sender,ControlEventArgs e) {
             ListButtons(buttonsList);
             ListButtons(buttonsListEditing);
@@ -1082,7 +1148,6 @@ namespace İronideDeneme
             }
         }
 
-        
         private void CreateButton_Click(object sender, EventArgs e)
         {
             
@@ -1215,7 +1280,8 @@ namespace İronideDeneme
         }
 
         private void MenuPanel1_ControlAdded(object sender,ControlEventArgs e) {
-            menuPanel1.Height=menuPanel1.Height+40;
+            var numb = db.GetElements("Tables").Count;
+            menuPanel1.Height=(numb)*40;
 
         }
 
@@ -1327,7 +1393,7 @@ namespace İronideDeneme
 
             }
             if(itemname=="seconditem") {
-                if(MessageBox.Show("Are you sure to remove this diary?","Remove a Diary",MessageBoxButtons.YesNo,MessageBoxIcon.Question)==DialogResult.Yes) {
+                if(MessageBox.Show("Are you sure to remove this post?","Remove a post",MessageBoxButtons.YesNo,MessageBoxIcon.Question)==DialogResult.Yes) {
                     messagesPanel.Controls.Remove(clickedpanel);
                     db.RemoveRow(tablename,db.GetDataIndex(tablename,"number",clickedpanel.Tag));
                 }
