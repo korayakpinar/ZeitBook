@@ -1009,7 +1009,7 @@ namespace İronideDeneme
         }
 
         private void EditButton_Click1(object sender,EventArgs e) {
-            if(buttonsList.SelectedIndex!=-1) {
+            if(buttonsListEditing.SelectedIndex!=-1) {
                 var buttonname = "D"+buttonsListEditing.SelectedItem;
                 var dex = db.GetDataIndex("Diaries","names",buttonname);
                 db.UpdateData("Diaries","names",dex,"D"+nameEditing.Text);
