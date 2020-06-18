@@ -750,11 +750,10 @@ namespace İronideDeneme
 
         }
 
+        #region Events
         private void AboutButton_Click(object sender,EventArgs e) {
             aboutForm.ShowDialog();
         }
-
-        #region Events
 
         private void Editbox_KeyDown(object sender,KeyEventArgs e) {
             if(e.KeyCode==Keys.Enter) {
@@ -787,7 +786,8 @@ namespace İronideDeneme
             var numb = db.GetElements("Tables").Count;
             menuPanel1.Height=(numb)*40;
             if(numb==1) {
-                menuPanel1.TextRender=true;
+               menuPanel1.Height=40;
+               menuPanel1.TextRender=true;
             }
 
         }
@@ -1107,7 +1107,7 @@ namespace İronideDeneme
                     db.RemoveRow("Diaries",db.GetDataIndex("Diaries","names","D"+buttonsList.SelectedItem));
                     goToHomepage();
                     refresh();
-                    menuPanel1.Height-=40;
+                    
                     removingForm.Close();
                     ListButtons(buttonsList);
                 } else {
@@ -1168,8 +1168,10 @@ namespace İronideDeneme
             diaryButton.EnterColor = IronideColorizer.FromHtml("#262626");
             diaryButton.HoverColor = IronideColorizer.FromHtml("#4d4d4d");
             diaryButton.ForeColor = Color.White;
-            if(menuPanel1.TextRender == true) {
+            if(menuPanel1.Controls.Count > 0) {
                 menuPanel1.TextRender = false;
+            } else {
+                menuPanel1.TextRender = true;
             }
             diaryButton.MouseClick += BigDiaryButton_MouseClick;
 
@@ -1203,30 +1205,38 @@ namespace İronideDeneme
 
             #endregion
 
-            db.AddData("Diaries","names","D"+name.Text);
-            name.Text=name.Text.Replace(" ",String.Empty);
+            
             if(db.ExistsTable("D"+name.Text)==true) {
                 MessageBox.Show("Sorry, there is a diary with the same name","Name Error",MessageBoxButtons.OK,MessageBoxIcon.Error);
+                menuPanel1.TextRender=true;
             } else {
-                db.CreateTable("D"+name.Text);
-                db.AddColumn("D"+name.Text,new MochaColumn("content"));
-                db.AddColumn("D"+name.Text,new MochaColumn("date"));
-                db.AddColumn("D"+name.Text,new MochaColumn("time"));
-                db.AddColumn("D"+name.Text,new MochaColumn("number"));
-                db.SetColumnDataType("D"+name.Text,"number",MochaDataType.AutoInt);
-
-                db.UpdateLastData("Diaries","descs",desc.Text);
-
-                if(bigDiaryButton.BorderThickness>0) {
-                    db.UpdateLastData("Diaries","color",IronideColorizer.ToHtml(bigDiaryButton.BorderColor));
+                if(name.Text=="") {
+                    MessageBox.Show("Sorry, the diary can not be nameless","Name Error",MessageBoxButtons.OK,MessageBoxIcon.Error);
+                    menuPanel1.TextRender=true;
                 } else {
-                    db.UpdateLastData("Diaries","color",IronideColorizer.ToHtml(Color.Transparent));
+                    db.AddData("Diaries","names","D"+name.Text);
+                    name.Text=name.Text.Replace(" ",String.Empty);
+                    db.CreateTable("D"+name.Text);
+                    db.AddColumn("D"+name.Text,new MochaColumn("content"));
+                    db.AddColumn("D"+name.Text,new MochaColumn("date"));
+                    db.AddColumn("D"+name.Text,new MochaColumn("time"));
+                    db.AddColumn("D"+name.Text,new MochaColumn("number"));
+                    db.SetColumnDataType("D"+name.Text,"number",MochaDataType.AutoInt);
+
+                    db.UpdateLastData("Diaries","descs",desc.Text);
+
+                    if(bigDiaryButton.BorderThickness>0) {
+                        db.UpdateLastData("Diaries","color",IronideColorizer.ToHtml(bigDiaryButton.BorderColor));
+                    } else {
+                        db.UpdateLastData("Diaries","color",IronideColorizer.ToHtml(Color.Transparent));
+                    }
+                    mainPanel.Controls.Add(bigDiaryButton);
+                    menuPanel1.Controls.Add(diaryButton);
+                    menuPanel1.TextRender=false;
+                    desc.Text = "";
+                    name.Text = "";
+                    creatingForm.Close();
                 }
-                mainPanel.Controls.Add(bigDiaryButton);
-                menuPanel1.Controls.Add(diaryButton);
-                desc.Text = "";
-                name.Text = "";
-                creatingForm.Close();
 
             }
             
@@ -1316,9 +1326,13 @@ namespace İronideDeneme
 
         private void AddingButton_Click(object sender, EventArgs e)
         {
-            
-            
+
+            name.Text="";
+            desc.Text="";
+            colorChecker.Checked=false;
+            buttonColor.Color=Color.White;
             creatingForm.ShowDialog();
+
             
 
         }
