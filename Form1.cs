@@ -595,8 +595,8 @@ namespace İronideDeneme
 
             colorCheckerEditing.Size=new Size(150,25);
             colorCheckerEditing.Text="New Color";
-            colorCheckerEditing.BackColor=creatingForm.BackColor;
-            colorCheckerEditing.BackColor2=creatingForm.BackColor2;
+            colorCheckerEditing.BackColor=Color.Transparent;
+            colorCheckerEditing.BackColor2=colorCheckerEditing.BackColor;
             colorCheckerEditing.ForeColor=Color.White;
             colorCheckerEditing.Location=new Point(180,460);
             colorCheckerEditing.Visible=true;
@@ -1092,6 +1092,9 @@ namespace İronideDeneme
                 descEditing.Enabled=false;
                 nameEditing.Enabled=false;
                 buttonColorEditing.Enabled=false;
+                editButton.Enabled=false;
+                colorCheckerEditing.Enabled=false;
+                
             }
             if(mainPanel.Controls.Count<1) {
                 buttonsListEditing.Enabled=false;
