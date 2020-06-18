@@ -1009,22 +1009,27 @@ namespace İronideDeneme
         }
 
         private void EditButton_Click1(object sender,EventArgs e) {
-            var buttonname = "D"+buttonsListEditing.SelectedItem;
-            var dex = db.GetDataIndex("Diaries","names",buttonname);
-            db.UpdateData("Diaries","names",dex,"D"+nameEditing.Text);
-            db.UpdateData("Diaries","descs",dex,descEditing.Text);
-            if(colorCheckerEditing.Checked==true) {
-                db.UpdateData("Diaries","color",dex,IronideColorizer.ToHtml(buttonColorEditing.Color));
-            }
-            db.RenameTable(buttonname,"D"+nameEditing.Text);
-            mainPanel.Controls.Clear();
-            menuPanel1.Controls.Clear();
-            MochaTableResult mt = db.ExecuteScalarTable("USE * FROM Diaries RETURN");
-            for(int i = 0; i < mt.Rows.Length; i++) {
-                createButtons(mt.Rows[i].Datas[0].ToString(),mt.Rows[i].Datas[1].ToString(),mt.Rows[i].Datas[2].ToString());
+            if(buttonsList.SelectedIndex!=-1) {
+                var buttonname = "D"+buttonsListEditing.SelectedItem;
+                var dex = db.GetDataIndex("Diaries","names",buttonname);
+                db.UpdateData("Diaries","names",dex,"D"+nameEditing.Text);
+                db.UpdateData("Diaries","descs",dex,descEditing.Text);
+                if(colorCheckerEditing.Checked==true) {
+                    db.UpdateData("Diaries","color",dex,IronideColorizer.ToHtml(buttonColorEditing.Color));
+                }
+                db.RenameTable(buttonname,"D"+nameEditing.Text);
+                mainPanel.Controls.Clear();
+                menuPanel1.Controls.Clear();
+                MochaTableResult mt = db.ExecuteScalarTable("USE * FROM Diaries RETURN");
+                for(int i = 0; i < mt.Rows.Length; i++) {
+                    createButtons(mt.Rows[i].Datas[0].ToString(),mt.Rows[i].Datas[1].ToString(),mt.Rows[i].Datas[2].ToString());
 
+                }
+                editingForm.Close();
+            } else {
+                return;
             }
-            editingForm.Close();
+            
 
         }
 
@@ -1088,17 +1093,24 @@ namespace İronideDeneme
             descEditing.Text="";
             nameEditing.Text="";
             buttonsListEditing.Placeholder="Select a button";
+            if(mainPanel.Controls.Count<1) {
+                buttonsListEditing.Enabled=false;
+            } else {
+                descEditing.Enabled=true;
+                nameEditing.Enabled=true;
+                buttonColorEditing.Enabled=true;
+                editButton.Enabled=true;
+                colorCheckerEditing.Enabled=true;
+            }
             if(buttonsListEditing.SelectedIndex<0) {
                 descEditing.Enabled=false;
                 nameEditing.Enabled=false;
                 buttonColorEditing.Enabled=false;
-                editButton.Enabled=false;
-                colorCheckerEditing.Enabled=false;
+                //editButton.Enabled=false;
+                //colorCheckerEditing.Enabled=false;
                 
             }
-            if(mainPanel.Controls.Count<1) {
-                buttonsListEditing.Enabled=false;
-            }
+            
             editingForm.ShowDialog();
             ListButtons(buttonsListEditing);
         }
