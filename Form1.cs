@@ -15,9 +15,10 @@ namespace İronideDeneme
     {
         int i = 10;
         string tablename = "";
-        Control clickedpanel;
         string labelname;
+        Control clickedpanel;
         MochaDatabase db = new MochaDatabase("path=Zeit;AutoConnect=true");
+        
         #region Components
 
         IronideSlidePanel menuPanel1 = new IronideSlidePanel();
@@ -63,16 +64,19 @@ namespace İronideDeneme
 
 
         #endregion
+        
         public Form1()
         {
             InitializeComponent();
+
+            #region editbox
             editbox.Font = new Font("Tahoma",13);
             editbox.BorderThickness=0;
             editbox.Multiline=false;
             editbox.WordWrap=false;
             editbox.Visible=false;
             editbox.KeyDown+=Editbox_KeyDown;
-
+            #endregion
 
             #region loadingButtons
 
@@ -575,7 +579,7 @@ namespace İronideDeneme
 
             messagesPanel.WrapContents=false;
             messagesPanel.FlowDirection=FlowDirection.BottomUp;
-            messagesPanel.Padding=new Padding(65,0,0,0);
+            messagesPanel.Padding=new Padding(85,0,0,0);
             messagesPanel.AutoScroll=true;
             messagesPanel.Size = new Size(this.Width,leftpanel.Height-100);
             messagesPanel.Top = this.Height - messagesPanel.Height-103;
@@ -678,8 +682,6 @@ namespace İronideDeneme
 
         }
 
-
-
         #region Events
 
         private void Editbox_KeyDown(object sender,KeyEventArgs e) {
@@ -744,6 +746,7 @@ namespace İronideDeneme
             postpanel.ContextMenuStrip=postRC;
             postpanel.MouseEnter+=PostPanel_MouseEnter;
             postpanel.MouseLeave+=PostPanel_MouseLeave;
+            
             i =i+5;
             #endregion
 
@@ -809,7 +812,7 @@ namespace İronideDeneme
 
 
             #endregion
-
+            postpanel.Tag=db.GetData(tablename,"number",db.GetDataIndex(tablename,"content",Content.Text));
             postpanel.Region = IronideConvert.ToRoundedRegion(postpanel.ClientRectangle,18);
             messagesPanel.Controls.Add(postpanel);
         }
@@ -821,6 +824,7 @@ namespace İronideDeneme
             IronidePanel postPanel = new IronidePanel();
             postPanel.AutoSize=false;
             postPanel.Name="post"+i;
+            
             postPanel.BorderThickness=0;
             postPanel.ForeColor=Color.Black;
             postPanel.BackColor=IronideColorizer.FromHex("282828");
@@ -896,7 +900,7 @@ namespace İronideDeneme
             db.AddData(tablename,"content",content.Text);
             db.UpdateLastData(tablename,"date",date.Text);
             db.UpdateLastData(tablename,"time",time.Text);
-
+            postPanel.Tag=db.GetData(tablename,"number",db.GetDataIndex(tablename,"content",content.Text));
 
         }
 
@@ -1143,6 +1147,8 @@ namespace İronideDeneme
                 db.AddColumn("D"+name.Text,new MochaColumn("content"));
                 db.AddColumn("D"+name.Text,new MochaColumn("date"));
                 db.AddColumn("D"+name.Text,new MochaColumn("time"));
+                db.AddColumn("D"+name.Text,new MochaColumn("number"));
+                db.SetColumnDataType("D"+name.Text,"number",MochaDataType.AutoInt);
 
                 db.UpdateLastData("Diaries","descs",desc.Text);
 
@@ -1302,9 +1308,6 @@ namespace İronideDeneme
             
         }
 
-
-        #endregion
-
         private void postRC_ItemClicked(object sender,ToolStripItemClickedEventArgs e) {
             var itemname = e.ClickedItem.Name;
             clickedpanel = postRC.SourceControl;
@@ -1323,6 +1326,13 @@ namespace İronideDeneme
                 editbox.Focus();
 
             }
+            if(itemname=="seconditem") {
+                if(MessageBox.Show("Are you sure to remove this diary?","Remove a Diary",MessageBoxButtons.YesNo,MessageBoxIcon.Question)==DialogResult.Yes) {
+                    messagesPanel.Controls.Remove(clickedpanel);
+                    db.RemoveRow(tablename,db.GetDataIndex(tablename,"number",clickedpanel.Tag));
+                }
+            }
         }
+        #endregion
     }
 }
