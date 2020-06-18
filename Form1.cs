@@ -783,13 +783,13 @@ namespace İronideDeneme
         }
 
         private void MenuPanel1_ControlRemoved(object sender,ControlEventArgs e) {
-            
-            if(menuPanel1.Controls.Count==0) {
+
+            var numb = db.GetElements("Tables").Count;
+            menuPanel1.Height=(numb)*40;
+            if(numb==1) {
                 menuPanel1.TextRender=true;
-            } else {
-                menuPanel1.Height=menuPanel1.Height - 40;
             }
-            
+
         }
 
         private void PostTextBox_KeyDown(object sender,KeyEventArgs e) {
@@ -1282,6 +1282,9 @@ namespace İronideDeneme
         private void MenuPanel1_ControlAdded(object sender,ControlEventArgs e) {
             var numb = db.GetElements("Tables").Count;
             menuPanel1.Height=(numb)*40;
+            if(numb==1) {
+                menuPanel1.TextRender=true;
+            }
 
         }
 
