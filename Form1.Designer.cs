@@ -32,7 +32,11 @@
             this.openbutton = new Ironide.IronideButton();
             this.leftpanel = new Ironide.IronideSlidePanel();
             this.version = new Ironide.IronideLabel();
+            this.postRC = new Ironide.Components.IronideContextMenuStrip();
+            this.firstitem = new Ironide.IronideToolStripMenuItem();
+            this.seconditem = new Ironide.IronideToolStripMenuItem();
             this.leftpanel.SuspendLayout();
+            this.postRC.SuspendLayout();
             this.SuspendLayout();
             // 
             // openbutton
@@ -75,6 +79,35 @@
             this.version.TabIndex = 6;
             this.version.Text = "v1.0.0";
             // 
+            // postRC
+            // 
+            this.postRC.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.postRC.BackColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.postRC.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.firstitem,
+            this.seconditem});
+            this.postRC.Name = "postRC";
+            this.postRC.Size = new System.Drawing.Size(181, 70);
+            this.postRC.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.postRC_ItemClicked);
+            // 
+            // firstitem
+            // 
+            this.firstitem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.firstitem.ForeColor = System.Drawing.Color.White;
+            this.firstitem.HoverColor = System.Drawing.SystemColors.GrayText;
+            this.firstitem.Name = "firstitem";
+            this.firstitem.Size = new System.Drawing.Size(180, 22);
+            this.firstitem.Text = "Edit this post";
+            // 
+            // seconditem
+            // 
+            this.seconditem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.seconditem.ForeColor = System.Drawing.Color.White;
+            this.seconditem.HoverColor = System.Drawing.SystemColors.GrayText;
+            this.seconditem.Name = "seconditem";
+            this.seconditem.Size = new System.Drawing.Size(180, 22);
+            this.seconditem.Text = "Remove this post";
+            // 
             // Form1
             // 
             this.Animation = Ironide.IronideFormAnimation.Fade;
@@ -94,6 +127,7 @@
             this.MinimizeBoxEnterColor = System.Drawing.Color.DimGray;
             this.MinimizeBoxHoverColor = System.Drawing.Color.DimGray;
             this.Name = "Form1";
+            this.Text = " ";
             this.Title = "ZeitBook";
             this.TitlebarBackColor = System.Drawing.Color.AliceBlue;
             this.TitlebarIconWidth = 25;
@@ -101,6 +135,7 @@
             this.Controls.SetChildIndex(this.openbutton, 0);
             this.leftpanel.ResumeLayout(false);
             this.leftpanel.PerformLayout();
+            this.postRC.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -109,6 +144,9 @@
         private Ironide.IronideButton openbutton;
         private Ironide.IronideSlidePanel leftpanel;
         private Ironide.IronideLabel version;
+        private Ironide.Components.IronideContextMenuStrip postRC;
+        private Ironide.IronideToolStripMenuItem firstitem;
+        private Ironide.IronideToolStripMenuItem seconditem;
     }
 }
 

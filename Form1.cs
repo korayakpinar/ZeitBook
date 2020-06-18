@@ -15,6 +15,8 @@ namespace İronideDeneme
     {
         int i = 10;
         string tablename = "";
+        Control clickedpanel;
+        string labelname;
         MochaDatabase db = new MochaDatabase("path=Zeit;AutoConnect=true");
         #region Components
 
@@ -55,6 +57,7 @@ namespace İronideDeneme
         IronideComboBox buttonsListEditing = new IronideComboBox();
         Ironide.Components.IronideContextMenuStrip bigOneRC = new Ironide.Components.IronideContextMenuStrip();
         IronideTextBox postTextBox = new IronideTextBox();
+        IronideTextBox editbox = new IronideTextBox();
         
         
 
@@ -63,6 +66,12 @@ namespace İronideDeneme
         public Form1()
         {
             InitializeComponent();
+            editbox.Font = new Font("Tahoma",13);
+            editbox.BorderThickness=0;
+            editbox.Multiline=false;
+            editbox.WordWrap=false;
+            editbox.Visible=false;
+            editbox.KeyDown+=Editbox_KeyDown;
 
 
             #region loadingButtons
@@ -660,19 +669,44 @@ namespace İronideDeneme
 
             #region bigOneRightClickMenu
             bigOneRC.AutoSize=true;
-            bigOneRC.Items.Add(new IronideToolStripMenuItem("Edit this Diary",this.BackColor,Color.White,Color.DimGray));
-            bigOneRC.Items.Add(new IronideToolStripMenuItem("Remove this Diary",this.BackColor,Color.White,Color.DimGray));
+            bigOneRC.Items.Add(new IronideToolStripMenuItem("Edit this diary",this.BackColor,Color.White,Color.DimGray));
+            bigOneRC.Items.Add(new IronideToolStripMenuItem("Remove this diary",this.BackColor,Color.White,Color.DimGray));
             bigOneRC.BackColor=this.BackColor;
             bigOneRC.BackColor2=bigOneRC.BackColor;
             bigOneRC.ItemClicked+=BigOneRC_ItemClicked;
             #endregion
 
-
         }
+
+
 
         #region Events
 
-        
+        private void Editbox_KeyDown(object sender,KeyEventArgs e) {
+            if(e.KeyCode==Keys.Enter) {
+                var dex = db.GetDataIndex(tablename,"content",clickedpanel.Controls[labelname].Text);
+                e.SuppressKeyPress=true;
+                editbox.Visible=false;
+                var label = clickedpanel.Controls[labelname];
+                label.Text=IronideWrapper.WordWrapPxStr(editbox.Text,label.Font,205,IronideWrapStyle.RemoveNewLines);
+                clickedpanel.Controls[labelname].Visible=true;
+                if(label.Width<102) {
+                    clickedpanel.Width=142;
+                } else {
+                    clickedpanel.Width=clickedpanel.Controls[labelname].Width+40;
+                }
+                clickedpanel.Height=clickedpanel.Controls[labelname].Height+30;
+                label.Location = new Point((clickedpanel.Width / 2) - (label.Width/2),clickedpanel.Height / 2 - label.Height / 2+5);
+                clickedpanel.Region=IronideConvert.ToRoundedRegion(clickedpanel.ClientRectangle,18);
+                clickedpanel.Controls.Remove(editbox);
+                
+                
+
+                db.UpdateData(tablename,"content",dex,clickedpanel.Controls[labelname].Text);
+
+            }
+
+        }
 
         private void MenuPanel1_ControlRemoved(object sender,ControlEventArgs e) {
             
@@ -707,6 +741,7 @@ namespace İronideDeneme
             postpanel.ForeColor = Color.Black;
             postpanel.BackColor=IronideColorizer.FromHex("282828");
             postpanel.BackColor2=postpanel.BackColor;
+            postpanel.ContextMenuStrip=postRC;
             postpanel.MouseEnter+=PostPanel_MouseEnter;
             postpanel.MouseLeave+=PostPanel_MouseLeave;
             i =i+5;
@@ -715,6 +750,7 @@ namespace İronideDeneme
             #region Content
             IronideLabel Content = new IronideLabel();
             Content.AutoSize = true;
+            Content.Name="content"+i;
             Content.Text = content;
             Content.BackColor=Color.Transparent;
             Content.BackColor2=Color.Transparent;
@@ -789,6 +825,7 @@ namespace İronideDeneme
             postPanel.ForeColor=Color.Black;
             postPanel.BackColor=IronideColorizer.FromHex("282828");
             postPanel.BackColor2=postPanel.BackColor;
+            postPanel.ContextMenuStrip=postRC;
             postPanel.MouseEnter+=PostPanel_MouseEnter;
             postPanel.MouseLeave+=PostPanel_MouseLeave;
 
@@ -804,6 +841,7 @@ namespace İronideDeneme
             content.BackColor2=Color.Transparent;
             content.ForeColor=Color.White;
             content.Font=new Font("Tahoma",14);
+            content.Name="content"+i;
             text=IronideWrapper.WordWrapPxStr(text,content.Font,800);
             content.Text=text;
             content.MouseEnter+=Parent_MouseEnter;
@@ -1266,5 +1304,25 @@ namespace İronideDeneme
 
 
         #endregion
+
+        private void postRC_ItemClicked(object sender,ToolStripItemClickedEventArgs e) {
+            var itemname = e.ClickedItem.Name;
+            clickedpanel = postRC.SourceControl;
+            if(itemname=="firstitem") {
+
+
+                editbox.Visible=true;
+                editbox.Width=clickedpanel.Width-40;
+                editbox.Location = new Point((clickedpanel.Width / 2) - (editbox.Width/2),clickedpanel.Height / 2 - editbox.Height / 2+5);
+                var name = Int32.Parse(clickedpanel.Name.Substring(4))+5;
+                labelname = "content"+name;
+                clickedpanel.Controls[labelname].Visible=false;
+                clickedpanel.Controls.Add(editbox);
+                editbox.Text=clickedpanel.Controls[labelname].Text;
+                editbox.SelectionStart=editbox.Text.Length;
+                editbox.Focus();
+
+            }
+        }
     }
 }
