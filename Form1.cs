@@ -92,7 +92,7 @@ namespace İronideDeneme
             TitlebarForeColor = Color.FromArgb(255, 255, 255);
             this.BackColor = Color.FromArgb(69, 69, 69);
             this.BackColor2 = this.BackColor;
-            this.Title = "Zeit";
+            this.Title = "ZeitBook";
             this.ShowIcon = true;
             this.TitlebarIconWidth=0;
             leftpanel.BackColor = Color.FromArgb(39, 39, 39);
@@ -962,12 +962,12 @@ namespace İronideDeneme
         private void BigOneRC_ItemClicked(object sender,ToolStripItemClickedEventArgs e) {
             
             var buttonname = "D"+bigOneRC.SourceControl.Name;
-            if(e.ClickedItem.Text=="Edit this Diary") {
+            if(e.ClickedItem.Text=="Edit this diary") {
                 var dex = db.GetDataIndex("Diaries","names",buttonname);
                 buttonsListEditing.SelectedIndex=dex;
                 editingForm.ShowDialog();
             }
-            if(e.ClickedItem.Text=="Remove this Diary") {
+            if(e.ClickedItem.Text=="Remove this diary") {
                 if(MessageBox.Show("Are you sure to remove this diary?","Remove a Diary",MessageBoxButtons.YesNo,MessageBoxIcon.Question)==DialogResult.Yes) {
                     db.RemoveTable(buttonname);
                     db.RemoveRow("Diaries",db.GetDataIndex("Diaries","names",buttonname));
