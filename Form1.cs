@@ -1138,6 +1138,8 @@ namespace İronideDeneme
         }
 
         private void MainPanel_ControlAdded(object sender,ControlEventArgs e) {
+            buttonsList.Enabled=true;
+            buttonsListEditing.Enabled=true;
             ListButtons(buttonsList);
             ListButtons(buttonsListEditing);
         }
