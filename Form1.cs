@@ -1108,7 +1108,11 @@ namespace İronideDeneme
                 buttonColorEditing.Enabled=false;
                 //editButton.Enabled=false;
                 //colorCheckerEditing.Enabled=false;
-                
+
+            } else {
+                descEditing.Enabled=true;
+                nameEditing.Enabled=true;
+                buttonColorEditing.Enabled=true;
             }
             
             editingForm.ShowDialog();
