@@ -77,7 +77,7 @@
             this.version.Name = "version";
             this.version.Size = new System.Drawing.Size(37, 13);
             this.version.TabIndex = 6;
-            this.version.Text = "v1.0.0";
+            this.version.Text = "v1.0.1";
             // 
             // postRC
             // 
@@ -87,7 +87,7 @@
             this.firstitem,
             this.seconditem});
             this.postRC.Name = "postRC";
-            this.postRC.Size = new System.Drawing.Size(181, 70);
+            this.postRC.Size = new System.Drawing.Size(166, 48);
             this.postRC.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.postRC_ItemClicked);
             // 
             // firstitem
@@ -96,7 +96,7 @@
             this.firstitem.ForeColor = System.Drawing.Color.White;
             this.firstitem.HoverColor = System.Drawing.SystemColors.GrayText;
             this.firstitem.Name = "firstitem";
-            this.firstitem.Size = new System.Drawing.Size(180, 22);
+            this.firstitem.Size = new System.Drawing.Size(165, 22);
             this.firstitem.Text = "Edit this post";
             // 
             // seconditem
@@ -105,7 +105,7 @@
             this.seconditem.ForeColor = System.Drawing.Color.White;
             this.seconditem.HoverColor = System.Drawing.SystemColors.GrayText;
             this.seconditem.Name = "seconditem";
-            this.seconditem.Size = new System.Drawing.Size(180, 22);
+            this.seconditem.Size = new System.Drawing.Size(165, 22);
             this.seconditem.Text = "Remove this post";
             // 
             // Form1

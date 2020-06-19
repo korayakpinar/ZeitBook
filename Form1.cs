@@ -481,7 +481,7 @@ namespace İronideDeneme
             copyright.Location=new Point(aboutForm.Width/2-copyright.Width/2-85,150);
 
             IronideLabel aboutVersion = new IronideLabel();
-            aboutVersion.Text="Version 1.0.0";
+            aboutVersion.Text="Version 1.0.1";
             aboutVersion.AutoSize=true;
             aboutVersion.Font=new Font("Tahoma",14);
             aboutVersion.ForeColor=Color.White;
