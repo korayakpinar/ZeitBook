@@ -481,7 +481,7 @@ namespace İronideDeneme
             about.ForeColor=Color.White;
             about.BackColor=Color.Transparent;
             about.BackColor2=about.BackColor;
-            about.Location=new Point(aboutForm.Width/2-about.Width/2-20,75);
+            about.Location=new Point((aboutForm.Width/2) - (about.Width/2) - 20,75);
             IronideLabel copyright = new IronideLabel();
             copyright.Text="Copyright © 2020 Koray Akpınar";
             copyright.AutoSize=true;
@@ -489,7 +489,7 @@ namespace İronideDeneme
             copyright.ForeColor=Color.White;
             copyright.BackColor=Color.Transparent;
             copyright.BackColor2=copyright.BackColor;
-            copyright.Location=new Point(aboutForm.Width/2-copyright.Width/2-85,150);
+            copyright.Location=new Point((aboutForm.Width/2) - (copyright.Width/2) - 85,150);
             IronideLabel aboutVersion = new IronideLabel();
             aboutVersion.Text="Version 1.0.1";
             aboutVersion.AutoSize=true;
@@ -497,7 +497,7 @@ namespace İronideDeneme
             aboutVersion.ForeColor=Color.White;
             aboutVersion.BackColor=Color.Transparent;
             aboutVersion.BackColor2=aboutVersion.BackColor;
-            aboutVersion.Location=new Point(aboutForm.Width/2-aboutVersion.Width/2-20,200);
+            aboutVersion.Location=new Point((aboutForm.Width/2)-(aboutVersion.Width/2) - 20,200);
             IronideLabel aboutText = new IronideLabel();
             aboutText.Text="ZeitBook is an electronic diary where you can keep your memories, regardless of size.";
             aboutText.AutoSize=true;
@@ -505,7 +505,7 @@ namespace İronideDeneme
             aboutText.ForeColor=Color.White;
             aboutText.BackColor=Color.Transparent;
             aboutText.BackColor2=aboutText.BackColor;
-            aboutText.Location=new Point(aboutForm.Width/2-aboutText.Width/2-310,250);
+            aboutText.Location=new Point((aboutForm.Width/2) - (aboutText.Width/2) - 310,250);
 
             #endregion
 
@@ -615,7 +615,7 @@ namespace İronideDeneme
             buttonsListEditing.BackColor=Color.White;
             buttonsListEditing.BorderColor=editingForm.BackColor;
             buttonsListEditing.HighlightColor=editingForm.BackColor;
-            buttonsListEditing.Location=new Point(editingForm.Width/2-buttonsListEditing.Width/2,70);
+            buttonsListEditing.Location=new Point((editingForm.Width/2)-(buttonsListEditing.Width/2),70);
             buttonsListEditing.PlaceholderAlign=ContentAlignment.MiddleCenter;
             buttonsListEditing.SelectedIndexChanged+=ButtonsListEditing_SelectedIndexChanged;
             ListButtons(buttonsListEditing);
@@ -680,7 +680,7 @@ namespace İronideDeneme
             postTextBox.BorderThickness=0;
             postTextBox.Size=new Size(900,200);
             postTextBox.Location=new Point(45,10);
-            postTextBox.Left=(this.Width/2-behindPostTextBox.Width/2-postTextBox.Width/2+10);
+            postTextBox.Left=(Width/2)-(behindPostTextBox.Width/2)-(postTextBox.Width/2)+10;
             postTextBox.Font= new Font("Tahoma",11);
             postTextBox.BackColor=IronideColorizer.FromHtml("#383838");
             postTextBox.ForeColor=Color.White;
@@ -707,7 +707,7 @@ namespace İronideDeneme
             buttonsList.BackColor=Color.White;
             buttonsList.BorderColor=removingForm.BackColor;
             buttonsList.HighlightColor=removingForm.BackColor;
-            buttonsList.Location=new Point(removingForm.Width/2-buttonsList.Width/2,100);
+            buttonsList.Location=new Point((removingForm.Width/2)-(buttonsList.Width/2),100);
             ListButtons(buttonsList);
 
             #endregion
@@ -794,7 +794,7 @@ namespace İronideDeneme
                     clickedpanel.Width=clickedpanel.Controls[labelname].Width+40;
                 }
                 clickedpanel.Height=clickedpanel.Controls[labelname].Height+30;
-                label.Location = new Point((clickedpanel.Width / 2) - (label.Width/2),clickedpanel.Height / 2 - label.Height / 2+5);
+                label.Location = new Point((clickedpanel.Width / 2) - (label.Width/2),(clickedpanel.Height / 2) - (label.Height / 2) + 5);
                 clickedpanel.Region=IronideConvert.ToRoundedRegion(clickedpanel.ClientRectangle,18);
                 clickedpanel.Controls.Remove(editbox);
                 db.UpdateData(tablename,"content",dex,clickedpanel.Controls[labelname].Text);
@@ -872,7 +872,7 @@ namespace İronideDeneme
             postTime.BackColor=Color.Transparent;
             postTime.BackColor2=postTime.BackColor;
             postTime.Text=time;
-            postTime.Location=new Point(Date.Width/2+postTime.Width/2+5,5);
+            postTime.Location=new Point((Date.Width/2)+(postTime.Width/2) + 5,5);
             postTime.Font=new Font("Tahoma",8);
             postTime.MouseEnter+=Parent_MouseEnter;
             postTime.MouseLeave+=Parent_MouseLeave;
@@ -885,7 +885,7 @@ namespace İronideDeneme
             if(Date.Width+postTime.Width>Content.Width) {
                 postpanel.Width=Date.Width+postTime.Width+40;
             }
-            Content.Location = new Point((postpanel.Width / 2) - (Content.Width/2),postpanel.Height / 2 - Content.Height / 2+5);
+            Content.Location = new Point((postpanel.Width / 2) - (Content.Width/2),(postpanel.Height / 2) - (Content.Height / 2) + 5);
             #endregion
             postpanel.Tag=db.GetData(tablename,"number",db.GetDataIndex(tablename,"content",Content.Text));
             postpanel.Region = IronideConvert.ToRoundedRegion(postpanel.ClientRectangle,18);
@@ -942,7 +942,7 @@ namespace İronideDeneme
             time.BackColor=Color.Transparent;
             time.BackColor2=time.BackColor;
             time.Text=DateTime.Now.ToString("H:mm");
-            time.Location=new Point(date.Width/2+time.Width/2-10,5);
+            time.Location=new Point((date.Width/2) + (time.Width/2) - 10,5);
             time.Font=new Font("Tahoma",8);
             time.MouseEnter+=Parent_MouseEnter;
             time.MouseLeave+=Parent_MouseLeave;
@@ -959,7 +959,7 @@ namespace İronideDeneme
                 postPanel.Width=date.Width+time.Width+40;
             }
             #endregion
-            content.Location=new Point((postPanel.Width/2) - (content.Width/2),postPanel.Height/2-content.Height/2+5);
+            content.Location=new Point((postPanel.Width/2) - (content.Width/2),(postPanel.Height/2) - (content.Height/2) + 5);
             postPanel.Region=IronideConvert.ToRoundedRegion(postPanel.ClientRectangle,18);
             messagesPanel.Controls.Add(postPanel);
             postPanel.Visible=true;
@@ -1344,9 +1344,9 @@ namespace İronideDeneme
             if (leftpanel.Visible == false)
             {
                 mainPanel.Location=new Point(BorderThickness,mainPanel.Location.Y);
-                mainPanel.Size=new Size(Width-BorderThickness*2,mainPanel.Height);
+                mainPanel.Size=new Size(Width-(BorderThickness * 2),mainPanel.Height);
                 messagesPanel.Location=new Point(BorderThickness,messagesPanel.Location.Y);
-                messagesPanel.Size=new Size(Width-BorderThickness*2,messagesPanel.Height);
+                messagesPanel.Size=new Size(Width-(BorderThickness * 2),messagesPanel.Height);
                 openbutton.Left -= leftpanel.Width;
                 behindPostTextBox.Width+=leftpanel.Width;
                 behindPostTextBox.Left-=leftpanel.Width;
@@ -1375,7 +1375,7 @@ namespace İronideDeneme
 
                 editbox.Visible=true;
                 editbox.Width=clickedpanel.Width-40;
-                editbox.Location = new Point((clickedpanel.Width / 2) - (editbox.Width/2),clickedpanel.Height / 2 - editbox.Height / 2+5);
+                editbox.Location = new Point((clickedpanel.Width / 2) - (editbox.Width/2),(clickedpanel.Height / 2) - (editbox.Height / 2) + 5);
                 var name = Int32.Parse(clickedpanel.Name.Substring(4))+5;
                 labelname = "content"+name;
                 clickedpanel.Controls[labelname].Visible=false;
