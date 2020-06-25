@@ -893,7 +893,6 @@ namespace İronideDeneme
         }
 
         private void createPost(string text,string table) {
-
             #region postPanel
             IronidePanel postPanel = new IronidePanel();
             postPanel.AutoSize=false;
@@ -967,7 +966,6 @@ namespace İronideDeneme
             db.UpdateLastData(tablename,"date",date.Text);
             db.UpdateLastData(tablename,"time",time.Text);
             postPanel.Tag=db.GetData(tablename,"number",db.GetDataIndex(tablename,"content",content.Text));
-
         }
 
         private void Parent_MouseEnter(object sender,EventArgs e) {
@@ -1150,7 +1148,6 @@ namespace İronideDeneme
 
         private void CreateButton_Click(object sender, EventArgs e)
         {
-
             #region diaryButton
             IronideButton diaryButton = new IronideButton();
             diaryButton.Name = name.Text;
@@ -1171,8 +1168,6 @@ namespace İronideDeneme
                 menuPanel1.TextRender = true;
             }
             diaryButton.MouseClick += BigDiaryButton_MouseClick;
-
-
             #endregion
 
             #region bigDiaryButton
@@ -1250,7 +1245,6 @@ namespace İronideDeneme
             mainPanel.Controls.Add(bigDiaryButton);
             #endregion
             #region littleOne
-
             IronideButton diaryButton = new IronideButton();
             diaryButton.Name = buttonName.Substring(1);
             diaryButton.Size = new Size(251,40);
@@ -1269,9 +1263,6 @@ namespace İronideDeneme
             }
             diaryButton.MouseClick += BigDiaryButton_MouseClick;
             menuPanel1.Controls.Add(diaryButton);
-            
-
-
             #endregion
         }
         
@@ -1285,8 +1276,6 @@ namespace İronideDeneme
         
         private void BigDiaryButton_MouseClick(object sender,MouseEventArgs e) {
             IronideButton asd = sender as IronideButton;
-            
-            
             if(e.Button == MouseButtons.Left) {
                 if(messagesPanel.Visible==false&&postTextBox.Visible==false) {
                     tablename = "D"+asd.Name.Replace(" ",String.Empty);
@@ -1302,11 +1291,9 @@ namespace İronideDeneme
                     for(int a = 0; a < mt.Rows.Count; a++) {
                         listPosts(mt.Rows[a].Datas[0].ToString(),mt.Rows[a].Datas[1].ToString(),mt.Rows[a].Datas[2].ToString());
                     }
-
                 }
                 mainPanel.Hide();
             }
-            
         }
 
         private void AddingButton_Click(object sender, EventArgs e)
@@ -1372,7 +1359,6 @@ namespace İronideDeneme
             var itemname = e.ClickedItem.Name;
             clickedpanel = postRC.SourceControl;
             if(itemname=="firstitem") {
-
                 editbox.Visible=true;
                 editbox.Width=clickedpanel.Width-40;
                 editbox.Location = new Point((clickedpanel.Width / 2) - (editbox.Width/2),(clickedpanel.Height / 2) - (editbox.Height / 2) + 5);
@@ -1383,7 +1369,6 @@ namespace İronideDeneme
                 editbox.Text=clickedpanel.Controls[labelname].Text;
                 editbox.SelectionStart=editbox.Text.Length;
                 editbox.Focus();
-
             }
             if(itemname=="seconditem") {
                 if(MessageBox.Show("Are you sure to remove this post?","Remove a post",MessageBoxButtons.YesNo,MessageBoxIcon.Question)==DialogResult.Yes) {
