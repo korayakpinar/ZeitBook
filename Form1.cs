@@ -1210,6 +1210,9 @@ namespace İronideDeneme
                     db.AddColumn("D"+name.Text,new MochaColumn("number"));
                     db.SetColumnDataType("D"+name.Text,"number",MochaDataType.AutoInt);
                     db.UpdateLastData("Diaries","descs",desc.Text);
+                    if(passwordChecker.Checked==true) {
+                        db.UpdateLastData("Diaries","password",passwordBox.Text);
+                    }
                     if(bigDiaryButton.BorderThickness>0) {
                         db.UpdateLastData("Diaries","color",IronideColorizer.ToHtml(bigDiaryButton.BorderColor));
                     } else {
