@@ -763,7 +763,6 @@ namespace İronideDeneme
             bigOneRC.BackColor2=bigOneRC.BackColor;
             bigOneRC.ItemClicked+=BigOneRC_ItemClicked;
             #endregion
-
         }
 
         #region Events
@@ -1352,7 +1351,6 @@ namespace İronideDeneme
                 postTextBox.Width-=leftpanel.Width;
                 behindPostTextBox.Region=IronideConvert.ToRoundedRegion(behindPostTextBox.ClientRectangle,25);
             }
-            
         }
 
         private void postRC_ItemClicked(object sender,ToolStripItemClickedEventArgs e) {
