@@ -84,9 +84,6 @@ namespace İronideDeneme
         IronideTextBox postTextBox = new IronideTextBox();
         IronideTextBox editbox = new IronideTextBox();
         TextBox passwordBox = new TextBox();
-        
-        
-
 
         #endregion
         
@@ -106,10 +103,7 @@ namespace İronideDeneme
             #region loadingButtons
 
             refresh();
-            
-            
-            
-            
+
             #endregion
 
             #region ComponentOptions
@@ -143,14 +137,12 @@ namespace İronideDeneme
             mainPanel.Size = new Size(this.Width, leftpanel.Height);
             mainPanel.SendToBack();
             mainPanel.Top = this.Height - mainPanel.Height-3;
-            mainPanel.Anchor = AnchorStyles.Right | AnchorStyles.Left |AnchorStyles.Top|AnchorStyles.Bottom;
+            mainPanel.Anchor = AnchorStyles.Right | AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Bottom;
             mainPanel.Width = mainPanel.Width - 10;
             mainPanel.Left = 3;
             mainPanel.BackColor = this.BackColor;
             mainPanel.BackColor2=this.BackColor2;
             mainPanel.ControlAdded+=MainPanel_ControlAdded;
-
-
 
             #endregion
 
@@ -179,8 +171,6 @@ namespace İronideDeneme
             } else {
                 menuPanel1.Height=(db.GetElements("Tables").Count)*40;
             }
-            
-
             menuPanel1.Hide();
 
             #endregion
@@ -371,7 +361,6 @@ namespace İronideDeneme
             editButton.Font = menuButton1.Font;
             editButton.Click+=EditButton_Click1;
 
-
             #endregion
 
             #region removeButton
@@ -412,7 +401,6 @@ namespace İronideDeneme
             creatingForm.TitlebarBackColor = creatingForm.BackColor;
             creatingForm.CloseBoxHoverColor = Color.Red;
             creatingForm.ShowInTaskbar = false;
-
 
             #endregion
 
@@ -494,7 +482,6 @@ namespace İronideDeneme
             about.BackColor=Color.Transparent;
             about.BackColor2=about.BackColor;
             about.Location=new Point(aboutForm.Width/2-about.Width/2-20,75);
-
             IronideLabel copyright = new IronideLabel();
             copyright.Text="Copyright © 2020 Koray Akpınar";
             copyright.AutoSize=true;
@@ -503,7 +490,6 @@ namespace İronideDeneme
             copyright.BackColor=Color.Transparent;
             copyright.BackColor2=copyright.BackColor;
             copyright.Location=new Point(aboutForm.Width/2-copyright.Width/2-85,150);
-
             IronideLabel aboutVersion = new IronideLabel();
             aboutVersion.Text="Version 1.0.1";
             aboutVersion.AutoSize=true;
@@ -512,7 +498,6 @@ namespace İronideDeneme
             aboutVersion.BackColor=Color.Transparent;
             aboutVersion.BackColor2=aboutVersion.BackColor;
             aboutVersion.Location=new Point(aboutForm.Width/2-aboutVersion.Width/2-20,200);
-
             IronideLabel aboutText = new IronideLabel();
             aboutText.Text="ZeitBook is an electronic diary where you can keep your memories, regardless of size.";
             aboutText.AutoSize=true;
@@ -532,9 +517,7 @@ namespace İronideDeneme
             logopicture.Size = new Size(125, 125);
             logopicture.BackColor = logoPanel1.BackColor;
             logopicture.BackColor2=logoPanel1.BackColor2;
-            
-
-            logopicture.Location = new Point((logoPanel1.Width / 2) - logopicture.Height / 2, (logoPanel1.Height / 2) - logopicture.Width / 2);
+            logopicture.Location = new Point((logoPanel1.Width / 2) - (logopicture.Height / 2), (logoPanel1.Height / 2) - (logopicture.Width / 2));
             logopicture.Anchor = AnchorStyles.None;
 
             #endregion
@@ -545,8 +528,6 @@ namespace İronideDeneme
             name.Location = new Point(320, 100);
             name.Size = new Size(300, 90);
             name.Font = new Font("Microsoft Sans Serif", 10);
-            
-
             nameLabel.AutoSize = true;
             nameLabel.Text = "Name of the Diary:";
             nameLabel.Font = new Font("Microsoft Sans Serif", 13);
@@ -564,7 +545,6 @@ namespace İronideDeneme
             desc.Size = new Size(300, 150);
             desc.Font = new Font("Microsoft Sans Serif", 9);
             desc.ScrollBars = ScrollBars.Vertical;
-
             descLabel.AutoSize = true;
             descLabel.Text = "Description of the Diary:";
             descLabel.Font = new Font("Microsoft Sans Serif", 13);
@@ -573,7 +553,6 @@ namespace İronideDeneme
             descLabel.BackColor2=descLabel.BackColor;
             descLabel.Location = new Point(120, 230);
             
-
             #endregion
 
             #region editingFormControls
@@ -584,7 +563,6 @@ namespace İronideDeneme
             nameEditing.Location = new Point(360,130);
             nameEditing.Size = new Size(300,90);
             nameEditing.Font = new Font("Microsoft Sans Serif",10);
-
             nameLabelEditing.AutoSize = true;
             nameLabelEditing.Text = "New name of the Diary:";
             nameLabelEditing.Font = new Font("Microsoft Sans Serif",13);
@@ -602,7 +580,6 @@ namespace İronideDeneme
             descEditing.Size = new Size(300,150);
             descEditing.Font = new Font("Microsoft Sans Serif",9);
             descEditing.ScrollBars = ScrollBars.Vertical;
-
             descLabelEditing.AutoSize = true;
             descLabelEditing.Text = "New description of the Diary:";
             descLabelEditing.Font = new Font("Microsoft Sans Serif",13);
@@ -618,7 +595,6 @@ namespace İronideDeneme
             buttonColorEditing.Size=new Size(200,190);
             buttonColorEditing.Location=new Point(410,380);
             buttonColorEditing.Hide();
-
             colorCheckerEditing.Size=new Size(150,25);
             colorCheckerEditing.Text="New Color";
             colorCheckerEditing.BackColor=Color.Transparent;
@@ -658,7 +634,6 @@ namespace İronideDeneme
             colorChecker.Visible=true;
             colorChecker.Font=menuButton1.Font;
             colorChecker.CheckedChanged+=ColorChecker_CheckedChanged;
-
             buttonColor.Size=new Size(200,190);
             buttonColor.Location=new Point(370,450);
             buttonColor.Hide();
@@ -666,7 +641,6 @@ namespace İronideDeneme
             #endregion
 
             #region diaryPassword
-
 
             passwordChecker.Size=new Size(150,25);
             passwordChecker.Text="Password";
@@ -677,12 +651,10 @@ namespace İronideDeneme
             passwordChecker.Visible=true;
             passwordChecker.Font=menuButton1.Font;
             passwordChecker.CheckedChanged+=PasswordChecker_CheckedChanged;
-
             passwordBox.Font = name.Font;
             passwordBox.Size = name.Size;
             passwordBox.Location=new Point(320,385);
             passwordBox.Visible=false;
-
 
             #endregion
 
@@ -701,7 +673,6 @@ namespace İronideDeneme
             messagesPanel.BackColor2=messagesPanel.BackColor;
             messagesPanel.Visible=false;
 
-
             #endregion
 
             #region postTextBox
@@ -715,7 +686,6 @@ namespace İronideDeneme
             postTextBox.ForeColor=Color.White;
             postTextBox.Visible=false;
             postTextBox.KeyDown+=PostTextBox_KeyDown;
-
             behindPostTextBox.BorderThickness=0;
             behindPostTextBox.Size=new Size(1000,45);
             behindPostTextBox.Location=new Point(3,this.Height-80);
@@ -726,7 +696,6 @@ namespace İronideDeneme
             behindPostTextBox.Region=IronideConvert.ToRoundedRegion(behindPostTextBox.ClientRectangle,25);
             behindPostTextBox.Visible=false;
 
-
             #endregion
 
             #region buttonsList
@@ -736,12 +705,10 @@ namespace İronideDeneme
             buttonsList.Placeholder="Select a button";
             buttonsList.PlaceholderAlign=ContentAlignment.MiddleCenter;
             buttonsList.BackColor=Color.White;
-            buttonsList.BackColor=Color.White;
             buttonsList.BorderColor=removingForm.BackColor;
             buttonsList.HighlightColor=removingForm.BackColor;
             buttonsList.Location=new Point(removingForm.Width/2-buttonsList.Width/2,100);
             ListButtons(buttonsList);
-
 
             #endregion
 
@@ -809,7 +776,6 @@ namespace İronideDeneme
             }
         }
 
-        
         private void AboutButton_Click(object sender,EventArgs e) {
             aboutForm.ShowDialog();
         }
@@ -831,24 +797,17 @@ namespace İronideDeneme
                 label.Location = new Point((clickedpanel.Width / 2) - (label.Width/2),clickedpanel.Height / 2 - label.Height / 2+5);
                 clickedpanel.Region=IronideConvert.ToRoundedRegion(clickedpanel.ClientRectangle,18);
                 clickedpanel.Controls.Remove(editbox);
-                
-                
-
                 db.UpdateData(tablename,"content",dex,clickedpanel.Controls[labelname].Text);
-
             }
-
         }
 
         private void MenuPanel1_ControlRemoved(object sender,ControlEventArgs e) {
-
             var numb = db.GetElements("Tables").Count;
             menuPanel1.Height=(numb)*40;
             if(numb==1) {
                menuPanel1.Height=40;
                menuPanel1.TextRender=true;
             }
-
         }
 
         private void PostTextBox_KeyDown(object sender,KeyEventArgs e) {
@@ -858,7 +817,6 @@ namespace İronideDeneme
                     createPost(postTextBox.Text,tablename);
                     postTextBox.Text="";
                     postTextBox.Focus();
-                    
                 } else {
                     return;
                 }
@@ -877,7 +835,6 @@ namespace İronideDeneme
             postpanel.ContextMenuStrip=postRC;
             postpanel.MouseEnter+=PostPanel_MouseEnter;
             postpanel.MouseLeave+=PostPanel_MouseLeave;
-            
             i =i+5;
             #endregion
 
@@ -892,12 +849,6 @@ namespace İronideDeneme
             Content.Font = new Font("Tahoma",14);
             Content.MouseEnter+=Parent_MouseEnter;
             Content.MouseLeave+=Parent_MouseLeave;
-            
-
-
-
-
-
             #endregion
 
             #region Date
@@ -925,23 +876,16 @@ namespace İronideDeneme
             postTime.Font=new Font("Tahoma",8);
             postTime.MouseEnter+=Parent_MouseEnter;
             postTime.MouseLeave+=Parent_MouseLeave;
-
             #endregion
             postpanel.Controls.Add(postTime);
-
             #region size
             postpanel.Controls.Add(Content);
-
-
             postpanel.Height = Content.Height+30;
             postpanel.Width = Content.Width+40;
             if(Date.Width+postTime.Width>Content.Width) {
                 postpanel.Width=Date.Width+postTime.Width+40;
             }
             Content.Location = new Point((postpanel.Width / 2) - (Content.Width/2),postpanel.Height / 2 - Content.Height / 2+5);
-
-
-
             #endregion
             postpanel.Tag=db.GetData(tablename,"number",db.GetDataIndex(tablename,"content",Content.Text));
             postpanel.Region = IronideConvert.ToRoundedRegion(postpanel.ClientRectangle,18);
@@ -954,7 +898,6 @@ namespace İronideDeneme
             IronidePanel postPanel = new IronidePanel();
             postPanel.AutoSize=false;
             postPanel.Name="post"+i;
-            
             postPanel.BorderThickness=0;
             postPanel.ForeColor=Color.Black;
             postPanel.BackColor=IronideColorizer.FromHex("282828");
@@ -962,13 +905,10 @@ namespace İronideDeneme
             postPanel.ContextMenuStrip=postRC;
             postPanel.MouseEnter+=PostPanel_MouseEnter;
             postPanel.MouseLeave+=PostPanel_MouseLeave;
-
-
             i=i+5;
             #endregion
 
             #region content
-
             IronideLabel content = new IronideLabel();
             content.AutoSize=true;
             content.BackColor=Color.Transparent;
@@ -1011,7 +951,6 @@ namespace İronideDeneme
             postPanel.Controls.Add(time);
             postPanel.Controls.Add(date);
             postPanel.Controls.Add(content);
-
             #region size
             postPanel.Height=content.Height+30;
             postPanel.Width=content.Width+40;
@@ -1021,12 +960,9 @@ namespace İronideDeneme
             }
             #endregion
             content.Location=new Point((postPanel.Width/2) - (content.Width/2),postPanel.Height/2-content.Height/2+5);
-
             postPanel.Region=IronideConvert.ToRoundedRegion(postPanel.ClientRectangle,18);
             messagesPanel.Controls.Add(postPanel);
             postPanel.Visible=true;
-
-            
             db.AddData(tablename,"content",content.Text);
             db.UpdateLastData(tablename,"date",date.Text);
             db.UpdateLastData(tablename,"time",time.Text);
@@ -1082,18 +1018,14 @@ namespace İronideDeneme
                 MochaTableResult mt = db.ExecuteScalarTable("USE * FROM Diaries RETURN");
                 for(int i = 0; i < mt.Rows.Length; i++) {
                     createButtons(mt.Rows[i].Datas[0].ToString(),mt.Rows[i].Datas[1].ToString(),mt.Rows[i].Datas[2].ToString());
-
                 }
                 editingForm.Close();
             } else {
                 return;
             }
-            
-
         }
 
         private void BigOneRC_ItemClicked(object sender,ToolStripItemClickedEventArgs e) {
-            
             var buttonname = "D"+bigOneRC.SourceControl.Name;
             if(e.ClickedItem.Text=="Edit this diary") {
                 var dex = db.GetDataIndex("Diaries","names",buttonname);
@@ -1107,9 +1039,7 @@ namespace İronideDeneme
                     refresh();
                     ListButtons(buttonsListEditing);
                     ListButtons(buttonsList);
-                    
                 } else {
-
                 }
             }
         }
@@ -1127,7 +1057,6 @@ namespace İronideDeneme
         }
 
         private void goToHomepage() {
-            
             mainPanel.Show();
             messagesPanel.Hide();
             behindPostTextBox.Hide();
@@ -1144,8 +1073,6 @@ namespace İronideDeneme
             descEditing.Text=buttondesc.ToString();
             var buttoncolor = db.GetData("Diaries","color",dex);
             buttonColorEditing.Color=IronideColorizer.FromHtml(buttoncolor.ToString());
-
-
         }
 
         private void EditButton_Click(object sender,EventArgs e) {
@@ -1167,13 +1094,11 @@ namespace İronideDeneme
                 buttonColorEditing.Enabled=false;
                 //editButton.Enabled=false;
                 //colorCheckerEditing.Enabled=false;
-
             } else {
                 descEditing.Enabled=true;
                 nameEditing.Enabled=true;
                 buttonColorEditing.Enabled=true;
             }
-            
             editingForm.ShowDialog();
             ListButtons(buttonsListEditing);
         }
@@ -1185,15 +1110,11 @@ namespace İronideDeneme
                     db.RemoveRow("Diaries",db.GetDataIndex("Diaries","names","D"+buttonsList.SelectedItem));
                     goToHomepage();
                     refresh();
-                    
                     removingForm.Close();
                     ListButtons(buttonsList);
                 } else {
-
                 }
             }
-            
-            
         }
 
         private void MainPanel_ControlAdded(object sender,ControlEventArgs e) {
@@ -1210,7 +1131,6 @@ namespace İronideDeneme
                 buttonsList.Enabled=false;
             }
             removingForm.ShowDialog();
-            
         }
 
         private void ListButtons(IronideComboBox combobox) {
@@ -1230,10 +1150,7 @@ namespace İronideDeneme
 
         private void CreateButton_Click(object sender, EventArgs e)
         {
-            
-            
 
-            
             #region diaryButton
             IronideButton diaryButton = new IronideButton();
             diaryButton.Name = name.Text;
@@ -1266,8 +1183,6 @@ namespace İronideDeneme
                 bigDiaryButton.BorderColor=buttonColor.Color;
             } else {
                 bigDiaryButton.BorderThickness=0;
-                
-
             }
             
             bigDiaryButton.BackColor=IronideColorizer.FromHtml("#595959");
@@ -1282,10 +1197,8 @@ namespace İronideDeneme
             bigDiaryButton.ContextMenuStrip=bigOneRC;
             bigDiaryButton.MouseClick+=BigDiaryButton_MouseClick;
 
-
             #endregion
 
-            
             if(db.ExistsTable("D"+name.Text)==true) {
                 MessageBox.Show("Sorry, there is a diary with the same name","Name Error",MessageBoxButtons.OK,MessageBoxIcon.Error);
                 menuPanel1.TextRender=true;
@@ -1302,9 +1215,7 @@ namespace İronideDeneme
                     db.AddColumn("D"+name.Text,new MochaColumn("time"));
                     db.AddColumn("D"+name.Text,new MochaColumn("number"));
                     db.SetColumnDataType("D"+name.Text,"number",MochaDataType.AutoInt);
-
                     db.UpdateLastData("Diaries","descs",desc.Text);
-
                     if(bigDiaryButton.BorderThickness>0) {
                         db.UpdateLastData("Diaries","color",IronideColorizer.ToHtml(bigDiaryButton.BorderColor));
                     } else {
@@ -1317,9 +1228,7 @@ namespace İronideDeneme
                     name.Text = "";
                     creatingForm.Close();
                 }
-
             }
-            
         }
 
         public void createButtons(string buttonName,string buttonDesc,string color) {
@@ -1333,14 +1242,13 @@ namespace İronideDeneme
             bigDiaryButton.Font=new Font("Microsoft Sans Serif",12,FontStyle.Regular);
             bigDiaryButton.ForeColor=Color.White;
             bigDiaryButton.BackColor2=bigDiaryButton.BackColor;
-            bigDiaryButton.Anchor=AnchorStyles.Left|AnchorStyles.Right|AnchorStyles.Top; ;
+            bigDiaryButton.Anchor=AnchorStyles.Left|AnchorStyles.Right|AnchorStyles.Top;
             bigDiaryButton.Name=buttonName.Substring(1);
             bigDiaryButton.Text=buttonName.Substring(1)+"\n\n\n"+buttonDesc;
             bigDiaryButton.ContextMenuStrip=bigOneRC;
             bigDiaryButton.MouseClick+=BigDiaryButton_MouseClick;
             mainPanel.Controls.Add(bigDiaryButton);
             #endregion
-
             #region littleOne
 
             IronideButton diaryButton = new IronideButton();
@@ -1365,19 +1273,16 @@ namespace İronideDeneme
 
 
             #endregion
-
-            
         }
-
+        
         private void MenuPanel1_ControlAdded(object sender,ControlEventArgs e) {
             var numb = db.GetElements("Tables").Count;
             menuPanel1.Height=(numb)*40;
             if(numb==1) {
                 menuPanel1.TextRender=true;
             }
-
         }
-
+        
         private void BigDiaryButton_MouseClick(object sender,MouseEventArgs e) {
             IronideButton asd = sender as IronideButton;
             
@@ -1406,17 +1311,13 @@ namespace İronideDeneme
 
         private void AddingButton_Click(object sender, EventArgs e)
         {
-
             name.Text="";
             desc.Text="";
             colorChecker.Checked=false;
             buttonColor.Color=Color.White;
             creatingForm.ShowDialog();
+        }   
 
-            
-
-        }
-        
         private void ActionsButton_Click(object sender, EventArgs e)
         {
             if(actionsPanel.Visible==false) {
@@ -1424,9 +1325,8 @@ namespace İronideDeneme
             } else {
                 actionsPanel.Hide();
             }
-            
         }
-        
+
         private void MenuButton1_Click(object sender, EventArgs e)
         {
             if(menuPanel1.Visible==false) {
@@ -1441,7 +1341,6 @@ namespace İronideDeneme
             openbutton.Visible=false;
             leftpanel.Toggle();
             openbutton.Visible=true;
-            
             if (leftpanel.Visible == false)
             {
                 mainPanel.Location=new Point(BorderThickness,mainPanel.Location.Y);
@@ -1465,8 +1364,6 @@ namespace İronideDeneme
                 behindPostTextBox.Left+=leftpanel.Width;
                 postTextBox.Width-=leftpanel.Width;
                 behindPostTextBox.Region=IronideConvert.ToRoundedRegion(behindPostTextBox.ClientRectangle,25);
-
-
             }
             
         }
@@ -1475,7 +1372,6 @@ namespace İronideDeneme
             var itemname = e.ClickedItem.Name;
             clickedpanel = postRC.SourceControl;
             if(itemname=="firstitem") {
-
 
                 editbox.Visible=true;
                 editbox.Width=clickedpanel.Width-40;
