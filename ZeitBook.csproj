@@ -35,7 +35,7 @@
     <ApplicationIcon>theicon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ironide, Version=1.0.0.0, Culture=neutral, PublicKeyToken=21c7f736fd9455c6, processorArchitecture=MSIL">
+    <Reference Include="ironide, Version=1.0.0.1, Culture=neutral, PublicKeyToken=21c7f736fd9455c6, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\OneDrive\Masaüstü\ironide.dll</HintPath>
     </Reference>

@@ -47,6 +47,7 @@ namespace İronideDeneme
         IronideLabel descLabelEditing = new IronideLabel();
         IronideButton removeButton = new IronideButton();
         IronidePictureBox logopicture = new IronidePictureBox();
+        IronideCheckBox passwordChecker = new IronideCheckBox();
         IronideCheckBox colorChecker = new IronideCheckBox();
         IronideCheckBox colorCheckerEditing = new IronideCheckBox();
         IronideColorPicker buttonColor = new IronideColorPicker();
@@ -60,6 +61,7 @@ namespace İronideDeneme
         Ironide.Components.IronideContextMenuStrip bigOneRC = new Ironide.Components.IronideContextMenuStrip();
         IronideTextBox postTextBox = new IronideTextBox();
         IronideTextBox editbox = new IronideTextBox();
+        TextBox passwordBox = new TextBox();
         
         
 
@@ -318,7 +320,7 @@ namespace İronideDeneme
             #region createButton
             
             createButton.Size = new Size(150, 40);
-            createButton.Location = new Point(575, 550);
+            createButton.Location = new Point(575, 650);
             createButton.BackColor = IronideColorizer.FromHtml("#606060");
             createButton.BackColor2 = IronideColorizer.FromHtml("#606060");
             createButton.ForeColor = IronideColorizer.FromHtml("#00ff00");
@@ -371,7 +373,7 @@ namespace İronideDeneme
 
             #region creatingForm
 
-            creatingForm.Size = new Size(800, 650);
+            creatingForm.Size = new Size(800, 750);
             creatingForm.BackColor = IronideColorizer.FromHex("3f3f3f");
             creatingForm.BackColor2 = IronideColorizer.FromHex("3f3f3f");
             creatingForm.BorderThickness = 1;
@@ -521,6 +523,7 @@ namespace İronideDeneme
             name.Location = new Point(320, 100);
             name.Size = new Size(300, 90);
             name.Font = new Font("Microsoft Sans Serif", 10);
+            
 
             nameLabel.AutoSize = true;
             nameLabel.Text = "Name of the Diary:";
@@ -547,6 +550,7 @@ namespace İronideDeneme
             descLabel.BackColor=creatingForm.BackColor;
             descLabel.BackColor2=descLabel.BackColor;
             descLabel.Location = new Point(120, 230);
+            
 
             #endregion
 
@@ -628,14 +632,35 @@ namespace İronideDeneme
             colorChecker.BackColor=creatingForm.BackColor;
             colorChecker.BackColor2=creatingForm.BackColor2;
             colorChecker.ForeColor=Color.White;
-            colorChecker.Location=new Point(180,430);
+            colorChecker.Location=new Point(160,530);
             colorChecker.Visible=true;
             colorChecker.Font=menuButton1.Font;
             colorChecker.CheckedChanged+=ColorChecker_CheckedChanged;
 
             buttonColor.Size=new Size(200,190);
-            buttonColor.Location=new Point(370,350);
+            buttonColor.Location=new Point(370,450);
             buttonColor.Hide();
+
+            #endregion
+
+            #region diaryPassword
+
+
+            passwordChecker.Size=new Size(150,25);
+            passwordChecker.Text="Password";
+            passwordChecker.BackColor=creatingForm.BackColor;
+            passwordChecker.BackColor2=creatingForm.BackColor2;
+            passwordChecker.ForeColor=Color.White;
+            passwordChecker.Location=new Point(160,385);
+            passwordChecker.Visible=true;
+            passwordChecker.Font=menuButton1.Font;
+            passwordChecker.CheckedChanged+=PasswordChecker_CheckedChanged;
+
+            passwordBox.Font = name.Font;
+            passwordBox.Size = name.Size;
+            passwordBox.Location=new Point(320,385);
+            passwordBox.Visible=false;
+
 
             #endregion
 
@@ -715,6 +740,8 @@ namespace İronideDeneme
             creatingForm.Controls.Add(nameLabel);
             creatingForm.Controls.Add(desc);
             creatingForm.Controls.Add(descLabel);
+            creatingForm.Controls.Add(passwordChecker);
+            creatingForm.Controls.Add(passwordBox);
             creatingForm.Controls.Add(colorChecker);
             creatingForm.Controls.Add(buttonColor);
             removingForm.Controls.Add(buttonsList);
@@ -751,6 +778,16 @@ namespace İronideDeneme
         }
 
         #region Events
+
+        private void PasswordChecker_CheckedChanged(object sender,EventArgs e) {
+            if(passwordChecker.Checked==true) {
+                passwordBox.Show();
+            } else {
+                passwordBox.Hide();
+            }
+        }
+
+        
         private void AboutButton_Click(object sender,EventArgs e) {
             aboutForm.ShowDialog();
         }
