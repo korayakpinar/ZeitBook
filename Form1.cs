@@ -30,6 +30,7 @@ using MochaDB.Querying;
 using MochaDB.Mhql;
 using System.Linq;
 using ZeitBook.Properties;
+using System.Media;
 
 namespace İronideDeneme
 {
@@ -51,8 +52,10 @@ namespace İronideDeneme
         IronideForm removingForm = new IronideForm();
         IronideForm editingForm = new IronideForm();
         IronideForm aboutForm = new IronideForm();
+        IronideForm askingPassForm = new IronideForm();
         IronideButton menuButton1 = new IronideButton();
         IronidePanel logoPanel1 = new IronidePanel();
+        IronideButton loginButton = new IronideButton();
         IronideButton aboutButton = new IronideButton();
         IronideButton actionsButton = new IronideButton();
         IronideButton creatingButton = new IronideButton();
@@ -78,6 +81,7 @@ namespace İronideDeneme
         TextBox name = new TextBox();
         TextBox descEditing = new TextBox();
         TextBox nameEditing = new TextBox();
+        IronideTextBox loginBox = new IronideTextBox();
         IronideComboBox buttonsList = new IronideComboBox();
         IronideComboBox buttonsListEditing = new IronideComboBox();
         Ironide.Components.IronideContextMenuStrip bigOneRC = new Ironide.Components.IronideContextMenuStrip();
@@ -378,6 +382,20 @@ namespace İronideDeneme
             removeButton.Click+=RemoveButton_Click;
             #endregion
 
+            #region loginButton
+            loginButton.Size=removeButton.Size;
+            loginButton.BackColor=removeButton.BackColor;
+            loginButton.BackColor2=loginButton.BackColor;
+            loginButton.EnterColor=createButton.BackColor;
+            loginButton.HoverColor=removeButton.HoverColor;
+            loginButton.BorderThickness=0;
+            loginButton.Location=removeButton.Location;
+            loginButton.Text="Login";
+            loginButton.ForeColor=Color.Silver;
+            loginButton.Font=removeButton.Font;
+            loginButton.Click+=LoginButton_Click;
+            #endregion
+
             #endregion
 
             #region Forms
@@ -407,6 +425,7 @@ namespace İronideDeneme
             #region removingForm
 
             removingForm.Size= new Size(600,350);
+            removingForm.Sizable=false;
             removingForm.BackColor = IronideColorizer.FromHex("3f3f3f");
             removingForm.BackColor2 = IronideColorizer.FromHex("3f3f3f");
             removingForm.BorderThickness = 1;
@@ -467,6 +486,30 @@ namespace İronideDeneme
             aboutForm.TitlebarBackColor = aboutForm.BackColor;
             aboutForm.CloseBoxHoverColor = Color.Red;
             aboutForm.ShowInTaskbar = false;
+
+            #endregion
+
+            #region askingPassForm
+
+            askingPassForm.Size= new Size(600,350);
+            askingPassForm.BackColor = IronideColorizer.FromHex("3f3f3f");
+            askingPassForm.BackColor2 = IronideColorizer.FromHex("3f3f3f");
+            askingPassForm.BorderThickness = 1;
+            askingPassForm.BorderColor = IronideColorizer.FromHtml("#0000ff");
+            askingPassForm.Animation = IronideFormAnimation.Fade;
+            askingPassForm.AnimationDelay = 15;
+            askingPassForm.ShowIcon = false;
+            askingPassForm.Sizable=false;
+            askingPassForm.TitlebarIconWidth = 0;
+            askingPassForm.MaximizeBox = false;
+            askingPassForm.MinimizeBox = false;
+            askingPassForm.ResizeDoubleClick = false;
+            askingPassForm.Title = "";
+            askingPassForm.TitlebarForeColor = Color.White;
+            askingPassForm.TitlebarBackColor = askingPassForm.BackColor;
+            askingPassForm.CloseBoxHoverColor = Color.Red;
+            askingPassForm.ShowInTaskbar = false;
+            askingPassForm.FormClosing+=AskingPassForm_FormClosing;
 
             #endregion
 
@@ -712,6 +755,20 @@ namespace İronideDeneme
 
             #endregion
 
+            #region loginBox
+            loginBox.Font=name.Font;
+            loginBox.Width=name.Width;
+            loginBox.Location=new Point((askingPassForm.Width/2) - (loginBox.Width/2),name.Location.Y+45);
+            loginBox.Placeholder="Please enter the password of the diary";
+            loginBox.BackColor=Color.White;
+            loginBox.BorderThickness=(IronideTextBoxBorderThickness)2;
+            loginBox.ActiveBorderColor=askingPassForm.BorderColor;
+            loginBox.InactiveBorderColor=loginBox.ActiveBorderColor;
+            loginBox.PasswordChar=Convert.ToChar("*");
+            loginBox.Font=new Font("Tahoma",11);
+            loginBox.KeyDown+=LoginBox_KeyDown;
+            #endregion
+
             #region DockAlignment
 
             leftpanel.Controls.Add(aboutButton);
@@ -733,6 +790,8 @@ namespace İronideDeneme
             creatingForm.Controls.Add(passwordBox);
             creatingForm.Controls.Add(colorChecker);
             creatingForm.Controls.Add(buttonColor);
+            askingPassForm.Controls.Add(loginButton);
+            askingPassForm.Controls.Add(loginBox);
             removingForm.Controls.Add(buttonsList);
             removingForm.Controls.Add(removeButton);
             editingForm.Controls.Add(nameEditing);
@@ -764,8 +823,21 @@ namespace İronideDeneme
             bigOneRC.ItemClicked+=BigOneRC_ItemClicked;
             #endregion
         }
-
         #region Events
+        private void LoginButton_Click(object sender,EventArgs e) {
+            trypass();
+        }
+
+        private void AskingPassForm_FormClosing(object sender,FormClosingEventArgs e) {
+            loginBox.Text="";
+        }
+
+        private void LoginBox_KeyDown(object sender,KeyEventArgs e) {
+            if(e.KeyCode==Keys.Enter) {
+                e.SuppressKeyPress=true;
+                trypass();
+            }
+        }
 
         private void PasswordChecker_CheckedChanged(object sender,EventArgs e) {
             if(passwordChecker.Checked==true) {
@@ -997,6 +1069,34 @@ namespace İronideDeneme
             MochaTableResult mt = db.ExecuteScalarTable("USE * FROM Diaries RETURN");
             for(int i = 0; i < mt.Rows.Length; i++) {
                 createButtons(mt.Rows[i].Datas[0].ToString(),mt.Rows[i].Datas[1].ToString(),mt.Rows[i].Datas[2].ToString());
+            }
+        }
+
+        private void trypass() {
+            var dex = db.GetDataIndex("Diaries","names",tablename);
+            var passindb = db.GetData("Diaries","password",dex);
+            if(passindb.ToString()==loginBox.Text) {
+                if(messagesPanel.Visible==false&&postTextBox.Visible==false) {
+                    messagesPanel.Show();
+                    postTextBox.Show();
+                    behindPostTextBox.Show();
+                    messagesPanel.Controls.Clear();
+                    MochaTable mt = db.GetTable($"{tablename}");
+                    /*for(int a = mt.Rows.Count; a > 0; a--) {
+                        listPosts(mt.Rows[a-1].Datas[0].ToString(),mt.Rows[a-1].Datas[1].ToString());
+
+                    }*/
+                    for(int a = 0; a < mt.Rows.Count; a++) {
+                        listPosts(mt.Rows[a].Datas[0].ToString(),mt.Rows[a].Datas[1].ToString(),mt.Rows[a].Datas[2].ToString());
+                    }
+                }
+                mainPanel.Hide();
+                askingPassForm.Close();
+                
+            } else {
+                SystemSounds.Beep.Play();
+                loginBox.ActiveBorderColor=Color.Red;
+                loginBox.InactiveBorderColor=loginBox.ActiveBorderColor;
             }
         }
 
@@ -1278,23 +1378,9 @@ namespace İronideDeneme
         
         private void BigDiaryButton_MouseClick(object sender,MouseEventArgs e) {
             IronideButton asd = sender as IronideButton;
+            tablename = "D"+asd.Name.Replace(" ",String.Empty);
             if(e.Button == MouseButtons.Left) {
-                if(messagesPanel.Visible==false&&postTextBox.Visible==false) {
-                    tablename = "D"+asd.Name.Replace(" ",String.Empty);
-                    messagesPanel.Show();
-                    postTextBox.Show();
-                    behindPostTextBox.Show();
-                    messagesPanel.Controls.Clear();
-                    MochaTable mt = db.GetTable($"{tablename}");
-                    /*for(int a = mt.Rows.Count; a > 0; a--) {
-                        listPosts(mt.Rows[a-1].Datas[0].ToString(),mt.Rows[a-1].Datas[1].ToString());
-
-                    }*/
-                    for(int a = 0; a < mt.Rows.Count; a++) {
-                        listPosts(mt.Rows[a].Datas[0].ToString(),mt.Rows[a].Datas[1].ToString(),mt.Rows[a].Datas[2].ToString());
-                    }
-                }
-                mainPanel.Hide();
+                askingPassForm.ShowDialog();
             }
         }
 
