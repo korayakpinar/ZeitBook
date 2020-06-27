@@ -72,6 +72,8 @@ namespace İronideDeneme
         IronideLabel nameLabelEditing = new IronideLabel();
         IronideLabel descLabelEditing = new IronideLabel();
         IronideButton removeButton = new IronideButton();
+        IronideButton passlogin = new IronideButton();
+        IronideButton passcreate = new IronideButton();
         IronidePictureBox logopicture = new IronidePictureBox();
         IronideCheckBox passwordChecker = new IronideCheckBox();
         IronideCheckBox colorChecker = new IronideCheckBox();
@@ -354,7 +356,7 @@ namespace İronideDeneme
             #region editButton
 
             editButton.Size = new Size(150,40);
-            editButton.Location = new Point(590,620);
+            editButton.Location = new Point(createButton.Location.X,createButton.Location.Y+35);
             editButton.BackColor = IronideColorizer.FromHtml("#606060");
             editButton.BackColor2 = IronideColorizer.FromHtml("#606060");
             editButton.ForeColor = IronideColorizer.FromHtml("#ffff00");
@@ -448,7 +450,7 @@ namespace İronideDeneme
 
             #region editingForm
 
-            editingForm.Size= new Size(800,700);
+            editingForm.Size= new Size(creatingForm.Width,creatingForm.Height+25);
             editingForm.BackColor = IronideColorizer.FromHex("3f3f3f");
             editingForm.BackColor2 = IronideColorizer.FromHex("3f3f3f");
             editingForm.BorderThickness = 1;
@@ -636,16 +638,15 @@ namespace İronideDeneme
             #endregion
 
             #region ColorPickerandCheckBoxEditing
-
             buttonColorEditing.Size=new Size(200,190);
-            buttonColorEditing.Location=new Point(410,380);
+            buttonColorEditing.Location=new Point(410,430);
             buttonColorEditing.Hide();
             colorCheckerEditing.Size=new Size(150,25);
             colorCheckerEditing.Text="New Color";
             colorCheckerEditing.BackColor=Color.Transparent;
             colorCheckerEditing.BackColor2=colorCheckerEditing.BackColor;
             colorCheckerEditing.ForeColor=Color.White;
-            colorCheckerEditing.Location=new Point(180,460);
+            colorCheckerEditing.Location=new Point(180,510);
             colorCheckerEditing.Visible=true;
             colorCheckerEditing.Font=menuButton1.Font;
             colorCheckerEditing.CheckedChanged+=ColorCheckerEditing_CheckedChanged;
@@ -699,7 +700,21 @@ namespace İronideDeneme
             passwordBox.Font = name.Font;
             passwordBox.Size = name.Size;
             passwordBox.Location=new Point(320,385);
+            passwordBox.PasswordChar=Convert.ToChar("*");
             passwordBox.Visible=false;
+            passcreate.Size=new Size(45,20);
+            passcreate.Location=new Point(passwordBox.Width+passwordBox.Location.X+20,passwordBox.Location.Y+4);
+            passcreate.BackgroundImage = Resources.redeye;
+            passcreate.BackgroundImageLayout=ImageLayout.Stretch;
+            passcreate.Region=IronideConvert.ToRoundedRegion(passcreate.ClientRectangle,20);
+            passcreate.BackColor=Color.Transparent;
+            passcreate.BackColor2=passcreate.BackColor;
+            passcreate.BorderThickness=0;
+            passcreate.Tag="kirmizi";
+            passcreate.HoverColor=Color.Transparent;
+            passcreate.EnterColor=Color.Transparent;
+            passcreate.Visible=false;
+            passcreate.Click+=Passcreate_Click;
 
             #endregion
 
@@ -760,7 +775,7 @@ namespace İronideDeneme
             #region loginBox
             loginBox.Font=name.Font;
             loginBox.Width=name.Width;
-            loginBox.Location=new Point((askingPassForm.Width/2) - (loginBox.Width/2),name.Location.Y+45);
+            loginBox.Location=new Point((askingPassForm.Width/2) - (loginBox.Width/2)-50,name.Location.Y+45);
             loginBox.Placeholder="Please enter the password of the diary";
             loginBox.BackColor=Color.White;
             loginBox.BorderThickness=(IronideTextBoxBorderThickness)2;
@@ -769,6 +784,23 @@ namespace İronideDeneme
             loginBox.PasswordChar=Convert.ToChar("*");
             loginBox.Font=new Font("Tahoma",11);
             loginBox.KeyDown+=LoginBox_KeyDown;
+            #endregion
+
+            #region passlogin
+
+            passlogin.Size=new Size(45,20);
+            passlogin.Location=new Point(loginBox.Location.X+20+loginBox.Width,loginBox.Location.Y+4);
+            passlogin.BackgroundImage = Resources.redeye;
+            passlogin.BackgroundImageLayout=ImageLayout.Stretch;
+            passlogin.Region=IronideConvert.ToRoundedRegion(passlogin.ClientRectangle,20);
+            passlogin.BackColor=Color.Transparent;
+            passlogin.BackColor2=passlogin.BackColor;
+            passlogin.BorderThickness=0;
+            passlogin.Tag="kirmizi";
+            passlogin.HoverColor=Color.Transparent;
+            passlogin.EnterColor=Color.Transparent;
+            passlogin.Click+=Passlogin_Click;
+
             #endregion
 
             #region DockAlignment
@@ -792,8 +824,10 @@ namespace İronideDeneme
             creatingForm.Controls.Add(passwordBox);
             creatingForm.Controls.Add(colorChecker);
             creatingForm.Controls.Add(buttonColor);
+            creatingForm.Controls.Add(passcreate);
             askingPassForm.Controls.Add(loginButton);
             askingPassForm.Controls.Add(loginBox);
+            askingPassForm.Controls.Add(passlogin);
             removingForm.Controls.Add(buttonsList);
             removingForm.Controls.Add(removeButton);
             editingForm.Controls.Add(nameEditing);
@@ -826,6 +860,30 @@ namespace İronideDeneme
             #endregion
         }
         #region Events
+        private void Passcreate_Click(object sender,EventArgs e) {
+            if((string)passcreate.Tag=="kirmizi") {
+                passcreate.Tag="yesil";
+                passcreate.BackgroundImage=Resources.greeneye;
+                passwordBox.PasswordChar=Convert.ToChar("\0");
+            } else {
+                passcreate.Tag="kirmizi";
+                passcreate.BackgroundImage=Resources.redeye;
+                passwordBox.PasswordChar=Convert.ToChar("*");
+            }
+        }
+        
+        private void Passlogin_Click(object sender,EventArgs e) {
+            if((string)passlogin.Tag=="kirmizi") {
+                passlogin.Tag="yesil";
+                passlogin.BackgroundImage=Resources.greeneye;
+                loginBox.PasswordChar=Convert.ToChar("\0");
+            } else {
+                passlogin.Tag="kirmizi";
+                passlogin.BackgroundImage=Resources.redeye;
+                loginBox.PasswordChar=Convert.ToChar("*");
+            }
+        }
+        
         private void LoginButton_Click(object sender,EventArgs e) {
             trypass();
         }
@@ -844,8 +902,10 @@ namespace İronideDeneme
         private void PasswordChecker_CheckedChanged(object sender,EventArgs e) {
             if(passwordChecker.Checked==true) {
                 passwordBox.Show();
+                passcreate.Show();
             } else {
                 passwordBox.Hide();
+                passcreate.Hide();
             }
         }
 

@@ -35,12 +35,11 @@
     <ApplicationIcon>theicon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ironide, Version=1.0.0.1, Culture=neutral, PublicKeyToken=21c7f736fd9455c6, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\OneDrive\Masaüstü\ironide.dll</HintPath>
+    <Reference Include="ironide, Version=1.0.0.3, Culture=neutral, PublicKeyToken=21c7f736fd9455c6, processorArchitecture=MSIL">
+      <HintPath>packages\Ironide.1.0.0.3\lib\net20\ironide.dll</HintPath>
     </Reference>
-    <Reference Include="MochaDB">
-      <HintPath>..\..\..\OneDrive\Masaüstü\MochaDB_Studio\MochaDB.dll</HintPath>
+    <Reference Include="MochaDB, Version=3.4.5.0, Culture=neutral, PublicKeyToken=142bb2bbf4e7e3dd, processorArchitecture=MSIL">
+      <HintPath>packages\MochaDB.3.4.5\lib\net40\MochaDB.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -76,6 +75,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -90,6 +90,8 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\greeneye.png" />
+    <None Include="Resources\redeye.png" />
     <Content Include="theicon.ico" />
   </ItemGroup>
   <ItemGroup>
