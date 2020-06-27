@@ -66,6 +66,7 @@ namespace İronideDeneme
         IronideButton createButton = new IronideButton();
         IronideButton addDiary = new IronideButton();
         IronideFlowLayoutPanel mainPanel = new IronideFlowLayoutPanel();
+        IronideLabel passwordLabel = new IronideLabel();
         IronideLabel nameLabel = new IronideLabel();
         IronideLabel descLabel = new IronideLabel();
         IronideLabel nameLabelEditing = new IronideLabel();
@@ -504,7 +505,8 @@ namespace İronideDeneme
             askingPassForm.MaximizeBox = false;
             askingPassForm.MinimizeBox = false;
             askingPassForm.ResizeDoubleClick = false;
-            askingPassForm.Title = "";
+            askingPassForm.Title = "Password";
+            askingPassForm.TitleAlign=IronideTitleAlign.Center;
             askingPassForm.TitlebarForeColor = Color.White;
             askingPassForm.TitlebarBackColor = askingPassForm.BackColor;
             askingPassForm.CloseBoxHoverColor = Color.Red;
@@ -1092,7 +1094,6 @@ namespace İronideDeneme
                 }
                 mainPanel.Hide();
                 askingPassForm.Close();
-                
             } else {
                 SystemSounds.Beep.Play();
                 loginBox.ActiveBorderColor=Color.Red;
@@ -1273,7 +1274,7 @@ namespace İronideDeneme
             IronideButton bigDiaryButton = new IronideButton();
             bigDiaryButton.Size= new Size(384,186);
             if(colorChecker.Checked==true) {
-                bigDiaryButton.BorderThickness=3;
+                bigDiaryButton.BorderThickness=2;
                 bigDiaryButton.BorderColor=buttonColor.Color;
             } else {
                 bigDiaryButton.BorderThickness=0;
@@ -1333,6 +1334,7 @@ namespace İronideDeneme
             IronideButton bigDiaryButton = new IronideButton();
             bigDiaryButton.Size= new Size(384,186);
             bigDiaryButton.BorderColor=IronideColorizer.FromHtml(color);
+            bigDiaryButton.BorderThickness=2;
             bigDiaryButton.BackColor=IronideColorizer.FromHtml("#595959");
             bigDiaryButton.HoverColor=IronideColorizer.FromHtml("#6f6f73");
             bigDiaryButton.EnterColor=IronideColorizer.FromHtml("#595959");
