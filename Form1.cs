@@ -28,7 +28,6 @@ using Ironide.Tools;
 using MochaDB;
 using MochaDB.Querying;
 using MochaDB.Mhql;
-using System.Linq;
 using ZeitBook.Properties;
 using System.Media;
 
@@ -39,6 +38,8 @@ namespace İronideDeneme
         int i = 10;
         string tablename = "";
         string labelname;
+        string buttonname;
+        string tablepass;
         Control clickedpanel;
         MochaDatabase db = new MochaDatabase("path=Zeit;AutoConnect=true");
         
@@ -53,6 +54,7 @@ namespace İronideDeneme
         IronideForm editingForm = new IronideForm();
         IronideForm aboutForm = new IronideForm();
         IronideForm askingPassForm = new IronideForm();
+        IronideForm changePassForm = new IronideForm();
         IronideButton menuButton1 = new IronideButton();
         IronidePanel logoPanel1 = new IronidePanel();
         IronideButton loginButton = new IronideButton();
@@ -65,6 +67,7 @@ namespace İronideDeneme
         IronideButton editButton = new IronideButton();
         IronideButton createButton = new IronideButton();
         IronideButton addDiary = new IronideButton();
+        IronideButton applyButton = new IronideButton();
         IronideFlowLayoutPanel mainPanel = new IronideFlowLayoutPanel();
         IronideLabel passwordLabel = new IronideLabel();
         IronideLabel nameLabel = new IronideLabel();
@@ -91,9 +94,11 @@ namespace İronideDeneme
         IronideTextBox postTextBox = new IronideTextBox();
         IronideTextBox editbox = new IronideTextBox();
         TextBox passwordBox = new TextBox();
-
+        IronideTextBox currentPass = new IronideTextBox();
+        IronideTextBox newPass = new IronideTextBox();
+        IronideTextBox newPassVerify = new IronideTextBox();
         #endregion
-        
+
         public Form1()
         {
             InitializeComponent();
@@ -399,6 +404,20 @@ namespace İronideDeneme
             loginButton.Click+=LoginButton_Click;
             #endregion
 
+            #region applyButton
+            applyButton.Size=removeButton.Size;
+            applyButton.BackColor=removeButton.BackColor;
+            applyButton.BackColor2=applyButton.BackColor;
+            applyButton.EnterColor=createButton.BackColor;
+            applyButton.HoverColor=removeButton.HoverColor;
+            applyButton.BorderThickness=0;
+            applyButton.Location=new Point(removeButton.Location.X,removeButton.Location.Y+25);
+            applyButton.Text="Apply";
+            applyButton.ForeColor=Color.Silver;
+            applyButton.Font=removeButton.Font;
+            applyButton.Click+=ApplyButton_Click;
+            #endregion
+
             #endregion
 
             #region Forms
@@ -515,6 +534,29 @@ namespace İronideDeneme
             askingPassForm.ShowInTaskbar = false;
             askingPassForm.FormClosing+=AskingPassForm_FormClosing;
 
+            #endregion
+
+            #region changePassForm
+            changePassForm.Size= new Size(600,350);
+            changePassForm.BackColor = IronideColorizer.FromHex("3f3f3f");
+            changePassForm.BackColor2 = IronideColorizer.FromHex("3f3f3f");
+            changePassForm.BorderThickness = 1;
+            changePassForm.BorderColor = IronideColorizer.FromHtml("#0000ff");
+            changePassForm.Animation = IronideFormAnimation.Fade;
+            changePassForm.AnimationDelay = 15;
+            changePassForm.ShowIcon = false;
+            changePassForm.Sizable=false;
+            changePassForm.TitlebarIconWidth = 0;
+            changePassForm.MaximizeBox = false;
+            changePassForm.MinimizeBox = false;
+            changePassForm.ResizeDoubleClick = false;
+            changePassForm.Title = "New Password";
+            changePassForm.TitleAlign=IronideTitleAlign.Center;
+            changePassForm.TitlebarForeColor = Color.White;
+            changePassForm.TitlebarBackColor = changePassForm.BackColor;
+            changePassForm.CloseBoxHoverColor = Color.Red;
+            changePassForm.ShowInTaskbar = false;
+            changePassForm.Shown+=ChangePassForm_Shown;
             #endregion
 
             #endregion
@@ -668,6 +710,47 @@ namespace İronideDeneme
 
             #endregion
 
+            #endregion
+
+            #region changePassFormControls
+            #region currentPass
+            currentPass.Font=name.Font;
+            currentPass.Width=name.Width+25;
+            currentPass.Location=new Point((changePassForm.Width/2)-(currentPass.Width/2),75);
+            currentPass.Placeholder="Please enter the current password of the diary";
+            currentPass.BackColor=Color.White;
+            currentPass.BorderThickness=(IronideTextBoxBorderThickness)2;
+            currentPass.ActiveBorderColor=changePassForm.BorderColor;
+            currentPass.InactiveBorderColor=currentPass.ActiveBorderColor;
+            currentPass.PasswordChar=Convert.ToChar("*");
+            currentPass.Font=new Font("Tahoma",11);
+            #endregion
+
+            #region newPass
+            newPass.Font=name.Font;
+            newPass.Width=name.Width+25;
+            newPass.Location=new Point((changePassForm.Width/2)-(newPass.Width/2),145);
+            newPass.Placeholder="Please enter the new password of the diary";
+            newPass.BackColor=Color.White;
+            newPass.BorderThickness=(IronideTextBoxBorderThickness)2;
+            newPass.ActiveBorderColor=changePassForm.BorderColor;
+            newPass.InactiveBorderColor=newPass.ActiveBorderColor;
+            newPass.PasswordChar=Convert.ToChar("*");
+            newPass.Font=new Font("Tahoma",11);
+            #endregion
+
+            #region newPassVerify
+            newPassVerify.Font=name.Font;
+            newPassVerify.Width=name.Width+25;
+            newPassVerify.Location=new Point((changePassForm.Width/2)-(newPassVerify.Width/2),185);
+            newPassVerify.Placeholder="Please verify the new password of the diary";
+            newPassVerify.BackColor=Color.White;
+            newPassVerify.BorderThickness=(IronideTextBoxBorderThickness)2;
+            newPassVerify.ActiveBorderColor=changePassForm.BorderColor;
+            newPassVerify.InactiveBorderColor=newPassVerify.ActiveBorderColor;
+            newPassVerify.PasswordChar=Convert.ToChar("*");
+            newPassVerify.Font=new Font("Tahoma",11);
+            #endregion
             #endregion
 
             #region ColorPickerAndCheckBox
@@ -828,6 +911,10 @@ namespace İronideDeneme
             askingPassForm.Controls.Add(loginButton);
             askingPassForm.Controls.Add(loginBox);
             askingPassForm.Controls.Add(passlogin);
+            changePassForm.Controls.Add(currentPass);
+            changePassForm.Controls.Add(newPass);
+            changePassForm.Controls.Add(newPassVerify);
+            changePassForm.Controls.Add(applyButton);
             removingForm.Controls.Add(buttonsList);
             removingForm.Controls.Add(removeButton);
             editingForm.Controls.Add(nameEditing);
@@ -854,12 +941,61 @@ namespace İronideDeneme
             bigOneRC.AutoSize=true;
             bigOneRC.Items.Add(new IronideToolStripMenuItem("Edit this diary",this.BackColor,Color.White,Color.DimGray));
             bigOneRC.Items.Add(new IronideToolStripMenuItem("Remove this diary",this.BackColor,Color.White,Color.DimGray));
+            bigOneRC.Items.Add(new IronideToolStripMenuItem("Change this diary's password",this.BackColor,Color.White,Color.DimGray));
             bigOneRC.BackColor=this.BackColor;
             bigOneRC.BackColor2=bigOneRC.BackColor;
             bigOneRC.ItemClicked+=BigOneRC_ItemClicked;
             #endregion
         }
         #region Events
+        private void ChangePassForm_Shown(object sender,EventArgs e) {
+            if(tablepass==null) {
+                currentPass.Hide();
+            }
+        }
+
+        private void ApplyButton_Click(object sender,EventArgs e) {
+            var dex = db.GetDataIndex("Diaries","names",tablename);
+            tablepass = db.GetData("Diaries","password",dex).ToString();
+            if(tablepass==currentPass.Text) {
+                currentPass.InactiveBorderColor=changePassForm.BorderColor;
+                currentPass.ActiveBorderColor=currentPass.InactiveBorderColor;
+                if(newPass.Text==newPassVerify.Text) {
+                    newPass.InactiveBorderColor=changePassForm.BorderColor;
+                    newPass.ActiveBorderColor=currentPass.InactiveBorderColor;
+                    newPassVerify.InactiveBorderColor=changePassForm.BorderColor;
+                    newPassVerify.ActiveBorderColor=currentPass.InactiveBorderColor;
+                    if(newPass.Text=="") {
+                        if(MessageBox.Show("Are you sure to remove the password of the diary","Removing Password",MessageBoxButtons.YesNo,MessageBoxIcon.Question)==DialogResult.Yes) {
+                            db.UpdateData("Diaries","password",dex,"");
+                        }
+                    } else {
+                        db.UpdateData("Diaries","password",dex,newPass.Text);
+                        currentPass.InactiveBorderColor=changePassForm.BorderColor;
+                        currentPass.ActiveBorderColor=currentPass.InactiveBorderColor;
+                        newPass.InactiveBorderColor=changePassForm.BorderColor;
+                        newPass.ActiveBorderColor=currentPass.InactiveBorderColor;
+                        newPassVerify.InactiveBorderColor=changePassForm.BorderColor;
+                        newPassVerify.ActiveBorderColor=newPassVerify.InactiveBorderColor;
+                        currentPass.Text="";
+                        newPass.Text="";
+                        newPassVerify.Text="";
+                        changePassForm.Close();
+                    }
+                } else {
+                    newPass.InactiveBorderColor=Color.Red;
+                    newPass.ActiveBorderColor=Color.Red;
+                    newPassVerify.InactiveBorderColor=Color.Red;
+                    newPassVerify.ActiveBorderColor=Color.Red;
+                    SystemSounds.Beep.Play();
+                }
+            } else {
+                SystemSounds.Beep.Play();
+                currentPass.InactiveBorderColor=Color.Red;
+                currentPass.ActiveBorderColor=Color.Red;
+            }
+        }
+        
         private void Passcreate_Click(object sender,EventArgs e) {
             if((string)passcreate.Tag=="kirmizi") {
                 passcreate.Tag="yesil";
@@ -1154,6 +1290,9 @@ namespace İronideDeneme
                 }
                 mainPanel.Hide();
                 askingPassForm.Close();
+                loginBox.InactiveBorderColor=askingPassForm.BorderColor;
+                loginBox.ActiveBorderColor=loginBox.InactiveBorderColor;
+                loginBox.Text="";
             } else {
                 SystemSounds.Beep.Play();
                 loginBox.ActiveBorderColor=Color.Red;
@@ -1184,7 +1323,7 @@ namespace İronideDeneme
         }
 
         private void BigOneRC_ItemClicked(object sender,ToolStripItemClickedEventArgs e) {
-            var buttonname = "D"+bigOneRC.SourceControl.Name;
+            buttonname = "D"+bigOneRC.SourceControl.Name;
             if(e.ClickedItem.Text=="Edit this diary") {
                 var dex = db.GetDataIndex("Diaries","names",buttonname);
                 buttonsListEditing.SelectedIndex=dex;
@@ -1199,6 +1338,9 @@ namespace İronideDeneme
                     ListButtons(buttonsList);
                 } else {
                 }
+            }
+            if(e.ClickedItem.Text=="Change this diary's password") {
+                changePassForm.ShowDialog();
             }
         }
 
@@ -1384,6 +1526,7 @@ namespace İronideDeneme
                     menuPanel1.TextRender=false;
                     desc.Text = "";
                     name.Text = "";
+                    passwordBox.Text="";
                     creatingForm.Close();
                 }
             }
@@ -1442,7 +1585,29 @@ namespace İronideDeneme
             IronideButton asd = sender as IronideButton;
             tablename = "D"+asd.Name.Replace(" ",String.Empty);
             if(e.Button == MouseButtons.Left) {
-                askingPassForm.ShowDialog();
+                var dex = db.GetDataIndex("Diaries","names",tablename);
+                var pass = db.GetData("Diaries","password",dex).ToString();
+                if(pass!="") {
+                    askingPassForm.ShowDialog();
+                } else {
+                    if(messagesPanel.Visible==false&&postTextBox.Visible==false) {
+                        messagesPanel.Show();
+                        postTextBox.Show();
+                        behindPostTextBox.Show();
+                        messagesPanel.Controls.Clear();
+                        MochaTable mt = db.GetTable($"{tablename}");
+                        /*for(int a = mt.Rows.Count; a > 0; a--) {
+                            listPosts(mt.Rows[a-1].Datas[0].ToString(),mt.Rows[a-1].Datas[1].ToString());
+
+                        }*/
+                        for(int a = 0; a < mt.Rows.Count; a++) {
+                            listPosts(mt.Rows[a].Datas[0].ToString(),mt.Rows[a].Datas[1].ToString(),mt.Rows[a].Datas[2].ToString());
+                        }
+                    }
+                    mainPanel.Hide();
+                    askingPassForm.Close();
+                }
+                
             }
         }
 
@@ -1506,18 +1671,23 @@ namespace İronideDeneme
 
         private void postRC_ItemClicked(object sender,ToolStripItemClickedEventArgs e) {
             var itemname = e.ClickedItem.Name;
-            clickedpanel = postRC.SourceControl;
-            if(itemname=="firstitem") {
-                editbox.Visible=true;
-                editbox.Width=clickedpanel.Width-40;
-                editbox.Location = new Point((clickedpanel.Width / 2) - (editbox.Width/2),(clickedpanel.Height / 2) - (editbox.Height / 2) + 5);
+            
+            if(editbox.Visible==false) {
+                clickedpanel = postRC.SourceControl;
                 var name = Int32.Parse(clickedpanel.Name.Substring(4))+5;
                 labelname = "content"+name;
-                clickedpanel.Controls[labelname].Visible=false;
-                clickedpanel.Controls.Add(editbox);
-                editbox.Text=clickedpanel.Controls[labelname].Text;
-                editbox.SelectionStart=editbox.Text.Length;
-                editbox.Focus();
+                if(itemname=="firstitem") {
+                    editbox.Visible=true;
+                    editbox.Width=clickedpanel.Width-40;
+                    editbox.Location = new Point((clickedpanel.Width / 2) - (editbox.Width/2),(clickedpanel.Height / 2) - (editbox.Height / 2) + 5);
+                    clickedpanel.Controls[labelname].Visible=false;
+                    clickedpanel.Controls.Add(editbox);
+                    editbox.Text=clickedpanel.Controls[labelname].Text;
+                    editbox.SelectionStart=editbox.Text.Length;
+                    editbox.Focus();
+                }
+            } else {
+                SystemSounds.Beep.Play();
             }
             if(itemname=="seconditem") {
                 if(MessageBox.Show("Are you sure to remove this post?","Remove a post",MessageBoxButtons.YesNo,MessageBoxIcon.Question)==DialogResult.Yes) {
